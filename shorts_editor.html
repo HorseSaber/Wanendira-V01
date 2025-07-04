@@ -2,25 +2,36 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <!-- ... Semua bagian <head> dan <style> dari sebelumnya tetap sama ... -->
     <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <title>Shorts Editor - Wanendira</title> <link rel="preconnect" href="https://fonts.googleapis.com"> <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> <link href="https://fonts.googleapis.com/css2?family=Alata&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
-    <style>:root{--navy-dark:#0A192F;--gold-accent:#F7B733;--navy-light:#132F4C;--text-primary:#E6F1FF;--text-secondary:#8892B0;--hover-bg:#1d3b5c}body{background-color:var(--navy-dark);color:var(--text-primary);font-family:'Nunito',sans-serif;margin:0}header{display:flex;justify-content:space-between;align-items:center;padding:20px 5%;border-bottom:1px solid var(--navy-light)}.brand-logo{font-family:'Alata',sans-serif;font-size:2em;color:var(--text-primary);text-decoration:none}.brand-logo span{color:var(--gold-accent)}main{padding:40px 5%;display:flex;flex-direction:column;align-items:center;flex-grow:1}.editor-container{width:100%;max-width:800px;display:flex;flex-direction:column;gap:25px}h1{font-family:'Alata',sans-serif;font-size:clamp(2rem, 5vw, 2.8rem);text-align:center;color:var(--gold-accent);margin-top:0;margin-bottom:20px}label{font-weight:700;font-size:1.1em;margin-bottom:8px;display:block}textarea{width:100%;padding:15px;border-radius:5px;border:1px solid var(--navy-light);background-color:var(--navy-light);color:var(--text-primary);font-family:'Nunito',sans-serif;font-size:1em;box-sizing:border-box;min-height:150px;resize:vertical}.custom-select-wrapper{position:relative;width:100%}.select-hidden{display:none}.select-styled{display:flex;justify-content:space-between;align-items:center;background-color:var(--navy-light);padding:15px;border-radius:5px;border:1px solid var(--navy-light);cursor:pointer;transition:all .2s ease-in-out}.select-styled:hover{border-color:var(--gold-accent)}.select-styled.active{border-color:var(--gold-accent);border-radius:5px 5px 0 0}.select-styled::after{content:"";width:0;height:0;border-left:6px solid transparent;border-right:6px solid transparent;border-top:6px solid var(--text-secondary)}.select-options{display:none;position:absolute;top:100%;left:0;right:0;z-index:99;background-color:var(--navy-light);border-radius:0 0 5px 5px;border:1px solid var(--gold-accent);border-top:0;max-height:200px;overflow-y:auto}.select-options div{padding:15px;color:var(--text-primary);cursor:pointer;transition:all .2s ease-in-out;border-top:1px solid #1a334f}.select-options div:first-child{border-top:none}.select-options div:hover{background-color:var(--hover-bg);color:var(--gold-accent)}.generate-button{background-color:var(--gold-accent);color:var(--navy-dark);border:none;padding:16px 30px;border-radius:5px;cursor:pointer;font-family:'Nunito',sans-serif;font-weight:800;font-size:1.2em;transition:all .3s ease;width:100%;margin-top:10px}.generate-button:disabled{background-color:var(--text-secondary);cursor:not-allowed}.hasil-container{margin-top:30px;width:100%;padding:25px;background-color:var(--navy-light);border-radius:10px;min-height:200px;border:1px dashed var(--text-secondary);box-sizing:border-box}.hasil-container h3{font-family:'Alata',sans-serif;color:var(--gold-accent);margin-top:0;font-size:1.5em}.hasil-container p{color:var(--text-primary);white-space:pre-wrap;line-height:1.7;font-size:1.1em}</style>
+    <style>
+        :root{--navy-dark:#0A192F;--gold-accent:#F7B733;--navy-light:#132F4C;--text-primary:#E6F1FF;--text-secondary:#8892B0;--hover-bg:#1d3b5c;--error-color:#ff4d4d}
+        body{background-color:var(--navy-dark);color:var(--text-primary);font-family:'Nunito',sans-serif;margin:0}
+        header{display:flex;justify-content:space-between;align-items:center;padding:20px 5%;border-bottom:1px solid var(--navy-light)}
+        .brand-logo{font-family:'Alata',sans-serif;font-size:2em;color:var(--text-primary);text-decoration:none}
+        .brand-logo span{color:var(--gold-accent)}
+        main{padding:40px 5%;display:flex;flex-direction:column;align-items:center;flex-grow:1}
+        .editor-container{width:100%;max-width:800px;display:flex;flex-direction:column;gap:25px}
+        h1{font-family:'Alata',sans-serif;font-size:clamp(2rem, 5vw, 2.8rem);text-align:center;color:var(--gold-accent);margin-top:0;margin-bottom:20px}
+        label{font-weight:700;font-size:1.1em;margin-bottom:8px;display:block}
+        textarea{width:100%;padding:15px;border-radius:5px;border:1px solid var(--navy-light);background-color:var(--navy-light);color:var(--text-primary);font-family:'Nunito',sans-serif;font-size:1em;box-sizing:border-box;min-height:150px;resize:vertical}
+        .custom-select-wrapper{position:relative;width:100%}.select-hidden{display:none}.select-styled{display:flex;justify-content:space-between;align-items:center;background-color:var(--navy-light);padding:15px;border-radius:5px;border:1px solid var(--navy-light);cursor:pointer;transition:all .2s ease-in-out}.select-styled:hover{border-color:var(--gold-accent)}.select-styled.active{border-color:var(--gold-accent);border-radius:5px 5px 0 0}.select-styled::after{content:"";width:0;height:0;border-left:6px solid transparent;border-right:6px solid transparent;border-top:6px solid var(--text-secondary)}.select-options{display:none;position:absolute;top:100%;left:0;right:0;z-index:99;background-color:var(--navy-light);border-radius:0 0 5px 5px;border:1px solid var(--gold-accent);border-top:0;max-height:200px;overflow-y:auto}.select-options div{padding:15px;color:var(--text-primary);cursor:pointer;transition:all .2s ease-in-out;border-top:1px solid #1a334f}.select-options div:first-child{border-top:none}.select-options div:hover{background-color:var(--hover-bg);color:var(--gold-accent)}
+        .generate-button{background-color:var(--gold-accent);color:var(--navy-dark);border:none;padding:16px 30px;border-radius:5px;cursor:pointer;font-family:'Nunito',sans-serif;font-weight:800;font-size:1.2em;transition:all .3s ease;width:100%;margin-top:10px}
+        .generate-button:disabled{background-color:var(--text-secondary);cursor:not-allowed}
+        .hasil-container{margin-top:30px;width:100%;padding:25px;background-color:var(--navy-light);border-radius:10px;min-height:200px;border:1px dashed var(--text-secondary);box-sizing:border-box}
+        .hasil-container h3{font-family:'Alata',sans-serif;color:var(--gold-accent);margin-top:0;font-size:1.5em}
+        .hasil-container p{color:var(--text-primary);white-space:pre-wrap;line-height:1.7;font-size:1.1em}
+        .error-message {color: var(--error-color) !important; font-weight: bold;}
+    </style>
 </head>
 <body>
-    <header>
-        <a href="index.html" class="brand-logo">Wanendira<span>.</span></a>
-    </header>
+    <header> <a href="index.html" class="brand-logo">Wanendira<span>.</span></a> </header>
     <main>
         <div class="editor-container">
             <h1>Shorts Editor</h1>
             
             <div class="custom-select-wrapper">
                 <label for="kategori">1. Kategori Konten</label>
-                <select id="kategori" class="select-hidden">
-                    <option value="motivasi">Shorts Motivasi (Reflektif)</option>
-                    <option value="cerpen">Shorts Cerita Pendek</option>
-                    <option value="fakta-sejarah">Shorts Fakta Sejarah</option>
-                </select>
+                <select id="kategori" class="select-hidden"> <option value="motivasi">Shorts Motivasi (Reflektif)</option> <option value="cerpen">Shorts Cerita Pendek</option> <option value="fakta-sejarah">Shorts Fakta Sejarah</option> </select>
             </div>
             
             <div>
@@ -30,20 +41,12 @@
             
             <div class="custom-select-wrapper">
                 <label for="gaya-bahasa">3. Gaya Bahasa (Tone of Voice)</label>
-                <select id="gaya-bahasa" class="select-hidden">
-                    <option value="bro-talk">Tegas & Santai (Gaya 'Bro')</option>
-                    <option value="inspiratif">Inspiratif & Puitis</option>
-                    <option value="formal">Formal & Informatif</option>
-                </select>
+                <select id="gaya-bahasa" class="select-hidden"> <option value="bro-talk">Tegas & Santai (Gaya 'Bro')</option> <option value="inspiratif">Inspiratif & Puitis</option> <option value="formal">Formal & Informatif</option> </select>
             </div>
             
             <div class="custom-select-wrapper">
                 <label for="gaya-visual">4. Gaya Visual</label>
-                <select id="gaya-visual" class="select-hidden">
-                    <option value="cinematic">Cinematic (Realistis)</option>
-                    <option value="anime">Anime (Animasi Jepang)</option>
-                    <option value="kartun-3d">Kartun 3D (Seperti Pixar)</option>
-                </select>
+                <select id="gaya-visual" class="select-hidden"> <option value="cinematic">Cinematic (Realistis)</option> <option value="anime">Anime (Animasi Jepang)</option> <option value="kartun-3d">Kartun 3D (Seperti Pixar)</option> </select>
             </div>
 
             <button id="generateBtn" class="generate-button">✨ Buat Skrip Lengkap!</button>
@@ -57,54 +60,63 @@
 
     <script>
     // ... Kode JavaScript untuk dropdown custom tetap sama ...
-    document.addEventListener('DOMContentLoaded',function(){document.querySelectorAll('.custom-select-wrapper').forEach(function(e){const t=e.querySelector('select'),l=document.createElement('div');l.setAttribute('class','select-styled'),l.textContent=t.options[t.selectedIndex].text;constc=document.createElement('div');c.setAttribute('class','select-options');for(leti=0;i<t.options.length;i++){constn=document.createElement('div');n.textContent=t.options[i].text,n.setAttribute('data-value',t.options[i].value),n.addEventListener('click',function(){l.textContent=this.textContent,t.value=this.getAttribute('data-value'),c.style.display='none',l.classList.remove('active')}),c.appendChild(n)}e.appendChild(l),e.appendChild(c),l.addEventListener('click',function(e){e.stopPropagation(),s(this),c.style.display='block'===c.style.display?'none':'block',this.classList.toggle('active')})});function s(e){document.querySelectorAll('.select-options').forEach(function(t){e.nextSibling!==t&&(t.style.display='none',t.previousSibling.classList.remove('active'))})}document.addEventListener('click',s)});
+    document.addEventListener('DOMContentLoaded',function(){document.querySelectorAll('.custom-select-wrapper').forEach(function(e){const t=e.querySelector('select'),l=document.createElement('div');l.setAttribute('class','select-styled'),l.textContent=t.options[t.selectedIndex].text;const c=document.createElement('div');c.setAttribute('class','select-options');for(let i=0;i<t.options.length;i++){const n=document.createElement('div');n.textContent=t.options[i].text,n.setAttribute('data-value',t.options[i].value),n.addEventListener('click',function(){l.textContent=this.textContent,t.value=this.getAttribute('data-value'),c.style.display='none',l.classList.remove('active')}),c.appendChild(n)}e.appendChild(l),e.appendChild(c),l.addEventListener('click',function(e){e.stopPropagation(),s(this),c.style.display='block'===c.style.display?'none':'block',this.classList.toggle('active')})});function s(e){document.querySelectorAll('.select-options').forEach(function(t){e.nextSibling!==t&&(t.style.display='none',t.previousSibling.classList.remove('active'))})}document.addEventListener('click',s)});
 
-    // === BAGIAN BARU: SCRIPT UNTUK MEMANGGIL "DAPUR" (BACKEND) ===
+    // === BAGIAN UTAMA: MEMANGGIL BACKEND ===
     const generateBtn = document.getElementById('generateBtn');
     const hasilText = document.getElementById('hasilText');
 
+    async function typeWriter(element, text, speed = 10) {
+        element.textContent = ""; // Kosongkan dulu
+        for (let i = 0; i < text.length; i++) {
+            await new Promise(resolve => setTimeout(resolve, speed));
+            element.textContent += text.charAt(i);
+        }
+    }
+
     generateBtn.addEventListener('click', async () => {
-        // Ambil semua pesanan dari meja
         const kategori = document.getElementById('kategori').value;
         const ide = document.getElementById('ide').value;
         const gayaBahasa = document.getElementById('gaya-bahasa').value;
         const gayaVisual = document.getElementById('gaya-visual').value;
 
-        if (!ide) {
+        if (!ide.trim()) {
             alert("Bro, ide utamanya jangan kosong ya!");
             return;
         }
 
-        // Tampilkan status 'memasak'
+        // --- UPDATE TAMPILAN SAAT LOADING ---
         generateBtn.disabled = true;
         generateBtn.textContent = 'Sedang Meracik Ide...';
+        hasilText.classList.remove('error-message');
         hasilText.textContent = 'Pelayan sedang menuju dapur... Mohon tunggu sebentar...';
 
         try {
-            // Pelayan mengirim pesanan ke dapur di '/api/generate'
+            // Mengirim pesanan ke backend kita yang aman
             const response = await fetch('/api/generate', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ kategori, ide, gayaBahasa, gayaVisual }),
             });
 
-            // Jika dapur tidak merespon dengan baik
+            const data = await response.json();
+
             if (!response.ok) {
-                throw new Error('Dapur sedang sibuk atau ada masalah. Coba lagi nanti.');
+                // Jika backend mengirim pesan error, lemparkan sebagai error
+                throw new Error(data.error || 'Dapur sedang sibuk atau ada masalah.');
             }
 
-            // Pelayan menerima hidangan dan menampilkannya
-            const data = await response.json();
-            hasilText.textContent = data.script;
+            // --- TAMPILKAN HASIL DENGAN EFEK MENGETIK ---
+            await typeWriter(hasilText, data.script);
 
         } catch (error) {
-            // Jika ada masalah di jalan
-            hasilText.textContent = `Waduh, ada masalah bro: ${error.message}`;
-            alert(`Waduh, ada masalah bro: ${error.message}`);
+            // --- MENANGANI ERROR DENGAN LEBIH ELEGAN ---
+            console.error("Terjadi kesalahan:", error);
+            const errorMessage = `Waduh, ada masalah bro: ${error.message}`;
+            hasilText.textContent = errorMessage;
+            hasilText.classList.add('error-message');
         } finally {
-            // Kembalikan tombol ke keadaan semula
+            // --- KEMBALIKAN TOMBOL KE SEMULA SETELAH SELESAI ---
             generateBtn.disabled = false;
             generateBtn.textContent = '✨ Buat Skrip Lengkap!';
         }
