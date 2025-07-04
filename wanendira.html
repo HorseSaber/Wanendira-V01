@@ -1,0 +1,160 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wanendira - Creative Studio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Alata&family=Nunito:wght@400;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --navy-dark: #0A192F; --gold-accent: #F7B733;
+            --navy-light: #132F4C; --text-primary: #E6F1FF;
+            --text-secondary: #8892B0;
+        }
+        body { background-color: var(--navy-dark); color: var(--text-primary); font-family: 'Nunito', sans-serif; margin: 0; }
+        header { display: flex; justify-content: space-between; align-items: center; padding: 20px 5%; border-bottom: 1px solid var(--navy-light); }
+        .brand-logo { font-family: 'Alata', sans-serif; font-size: 2em; color: var(--text-primary); text-decoration: none; }
+        .brand-logo span { color: var(--gold-accent); }
+        .auth-buttons button { background-color: transparent; color: var(--text-primary); border: 1px solid var(--gold-accent); padding: 8px 16px; border-radius: 5px; cursor: pointer; font-weight: 700; margin-left: 10px; transition: all 0.3s ease; }
+        .auth-buttons button.primary { background-color: var(--gold-accent); color: var(--navy-dark); }
+        .auth-buttons button:hover { opacity: 0.8; transform: translateY(-2px); }
+        main { padding: 40px 5%; text-align: center; }
+        .hero-section h1 { font-size: clamp(2.5rem, 5vw, 3.5rem); font-weight: 800; color: var(--text-primary); margin-bottom: 15px; }
+        .hero-section .highlight { color: var(--gold-accent); font-family: 'Alata', sans-serif; }
+        .hero-section p { font-size: clamp(1rem, 2.5vw, 1.2rem); color: var(--text-secondary); max-width: 650px; margin: 0 auto 50px auto; line-height: 1.6; }
+        .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 25px; width: 100%; max-width: 1200px; margin: 40px auto; }
+        .card-link { text-decoration: none; }
+        .feature-card { background-color: var(--navy-light); border-radius: 10px; border: 1px solid transparent; transition: all 0.3s ease; cursor: pointer; padding: 20px; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; height: 180px; }
+        .feature-card:hover { border-color: var(--gold-accent); transform: translateY(-5px); }
+        .card-icon { color: var(--gold-accent); margin-bottom: 15px; }
+        .feature-card h3 { font-family: 'Alata', sans-serif; color: var(--text-primary); margin-top: 0; margin-bottom: 8px; font-size: 1.2em; text-align: center; }
+        .feature-card p { color: var(--text-secondary); font-size: 0.9em; text-align: center; line-height: 1.5; margin: 0; }
+        .modal { display: none; position: fixed; z-index: 100; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(10, 25, 47, 0.8); backdrop-filter: blur(5px); }
+        .modal-content { background-color: var(--navy-light); margin: 15% auto; padding: 30px; border: 1px solid var(--gold-accent); width: 90%; max-width: 400px; border-radius: 10px; position: relative; }
+        .close-btn { color: var(--text-secondary); float: right; font-size: 28px; font-weight: bold; cursor: pointer; }
+        .close-btn:hover, .close-btn:focus { color: var(--text-primary); }
+        .modal-content h2 { font-family: 'Alata', sans-serif; color: var(--gold-accent); }
+        .modal-content input[type="email"], .modal-content input[type="password"] { width: 100%; padding: 12px; margin: 8px 0 20px 0; display: inline-block; border: 1px solid var(--navy-dark); background-color: var(--navy-dark); color: var(--text-primary); border-radius: 5px; box-sizing: border-box; font-size: 1em; }
+        .modal-content button { width: 100%; padding: 14px 20px; font-size: 1.1em; }
+        @media (max-width: 768px) {
+            header { flex-direction: column; gap: 15px; }
+            .features-grid { grid-template-columns: 1fr; }
+            .feature-card { height: auto; padding: 25px; }
+            .modal-content { margin: 25% auto; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <a href="#" class="brand-logo">Wanendira<span>.</span></a>
+        <div class="auth-buttons"> 
+            <button id="btnLogin">Masuk</button> 
+            <button id="btnDaftar" class="primary">Daftar</button> 
+        </div>
+    </header>
+    <main>
+        <section class="hero-section"> <h1>Studio Kreatif AI untuk <span class="highlight">Imajinasi</span> Tanpa Batas</h1> <p>Hasilkan skrip YouTube, gambar visual, prompt video, dan temukan inspirasi tanpa henti. Semua dalam satu tempat.</p> </section>
+        <div class="features-grid">
+            <a href="ruang_kerja_youtube.html" class="card-link"><div class="feature-card"><div class="card-icon"><svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3zM7 2v13"/></svg></div><h3>Konten YouTube</h3><p>Buat skrip untuk Shorts dan video panjang.</p></div></a>
+            <a href="#" class="card-link"><div class="feature-card"><div class="card-icon"><svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M20.4 14.5L16 10 4 20"/></svg></div><h3>Teks ke Gambar</h3><p>Ubah ide tulisan menjadi karya seni visual.</p></div></a>
+            <a href="#" class="card-link"><div class="feature-card"><div class="card-icon"><svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg></div><h3>Prompt Video</h3><p>Kembangkan narasi menjadi prompt aksi.</p></div></a>
+            <a href="#" class="card-link"><div class="feature-card"><div class="card-icon"><svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div><h3>Ruang Eksplorasi</h3><p>Temukan kutipan, wawasan, dan tren berita.</p></div></a>
+        </div>
+    </main>
+
+    <div id="registerModal" class="modal">
+        <div class="modal-content"><span class="close-btn">×</span><h2>Daftar Akun Baru</h2><input type="email" id="registerEmail" placeholder="Masukkan Email Anda"><input type="password" id="registerPassword" placeholder="Buat Password (min. 6 karakter)"><button id="btnSubmitRegister" class="primary">Daftar Sekarang</button></div>
+    </div>
+    <div id="loginModal" class="modal">
+        <div class="modal-content"><span class="close-btn">×</span><h2>Masuk ke Wanendira</h2><input type="email" id="loginEmail" placeholder="Email Anda"><input type="password" id="loginPassword" placeholder="Password Anda"><button id="btnSubmitLogin" class="primary">Masuk</button></div>
+    </div>
+
+    <!-- PENTING: SCRIPT DI BAWAH INI MEMUAT PERPUSTAKAAN FIREBASE -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+    
+    <script>
+        // ***************************************************************
+        // GANTI BAGIAN INI DENGAN KODE FIREBASE ASLI-MU DENGAN FORMAT BENAR
+        // ***************************************************************
+        const firebaseConfig = {
+            apiKey: "AIzaSyCw5zgRn9WnWuF0KhjC3JV2OPgf1kqDOo8",
+            authDomain: "wanendira-f00ab.firebaseapp.com",
+            projectId: "wanendira-f00ab",
+            storageBucket: "wanendira-f00ab.appspot.com",
+            messagingSenderId: "300147768356",
+            appId: "1:300147768356:web:1deff44ef61d6879fcecb1"
+        };
+        // ***************************************************************
+
+        // Inisialisasi Firebase DENGAN CARA YANG BENAR
+        const app = firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+
+        // Mengambil elemen-elemen dari halaman
+        const btnLogin = document.getElementById('btnLogin');
+        const btnDaftar = document.getElementById('btnDaftar');
+        const registerModal = document.getElementById('registerModal');
+        const loginModal = document.getElementById('loginModal');
+        const closeBtns = document.querySelectorAll('.close-btn');
+
+        // Fungsi untuk membuka modal (baru akan jalan jika elemennya ada)
+        if (btnDaftar) {
+            btnDaftar.addEventListener('click', () => { registerModal.style.display = 'block'; });
+        }
+        if (btnLogin) {
+            btnLogin.addEventListener('click', () => { loginModal.style.display = 'block'; });
+        }
+
+        // Fungsi untuk menutup modal
+        closeBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                btn.closest('.modal').style.display = 'none';
+            });
+        });
+        window.onclick = function(event) {
+            if (event.target.classList.contains('modal')) {
+                event.target.style.display = 'none';
+            }
+        }
+
+        // === FUNGSI UTAMA: DAFTAR & LOGIN ===
+        const btnSubmitRegister = document.getElementById('btnSubmitRegister');
+        if (btnSubmitRegister) {
+            btnSubmitRegister.addEventListener('click', () => {
+                const email = document.getElementById('registerEmail').value;
+                const password = document.getElementById('registerPassword').value;
+                auth.createUserWithEmailAndPassword(email, password)
+                    .then((userCredential) => {
+                        alert("Akun berhasil dibuat! Silakan masuk.");
+                        registerModal.style.display = 'none';
+                        loginModal.style.display = 'block';
+                    })
+                    .catch((error) => {
+                        alert("Gagal mendaftar: " + error.message);
+                    });
+            });
+        }
+
+        const btnSubmitLogin = document.getElementById('btnSubmitLogin');
+        if (btnSubmitLogin) {
+            btnSubmitLogin.addEventListener('click', () => {
+                const email = document.getElementById('loginEmail').value;
+                const password = document.getElementById('loginPassword').value;
+                auth.signInWithEmailAndPassword(email, password)
+                    .then((userCredential) => {
+                        alert("Login berhasil! Selamat datang di Wanendira, bro!");
+                        loginModal.style.display = 'none';
+                    })
+                    .catch((error) => {
+                        alert("Gagal masuk: " + error.message);
+                    });
+            });
+        }
+    </script>
+</body>
+</html>
+
