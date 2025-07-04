@@ -1,26 +1,32 @@
-// api/generate.js
+// api/generate.js - VERSI REVISI
 
-// Ini adalah cara kita memanggil library AI dari Google
+// Kita tidak perlu mengimpor library, Vercel sudah menyediakannya.
+// Cukup gunakan 'require'
 const { GoogleGenerativeAI } = require("@google/generative-ai");
 
-// Ini adalah fungsi utama yang akan dijalankan oleh Vercel
-// 'req' adalah permintaan dari Pelayan (Frontend)
-// 'res' adalah jawaban yang akan kita kirim kembali
 export default async function handler(req, res) {
-  // Pastikan hanya metode POST yang diizinkan (untuk keamanan)
+  // Pastikan ini adalah permintaan POST
   if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'Method Not Allowed' });
+    return res.status(405).json({ error: 'Method Not Allowed. Please use POST.' });
+  }
+
+  // Cek apakah API Key ada di 'brankas' Vercel
+  if (!process.env.GEMINI_API_KEY) {
+    console.error("GEMINI_API_KEY tidak ditemukan di environment variables.");
+    return res.status(500).json({ error: "Konfigurasi server tidak lengkap. API Key tidak ditemukan." });
   }
 
   try {
-    // Ambil API Key dari 'Brankas' (Environment Variables)
     const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash"});
+    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
-    // Ambil 'kertas pesanan' dari Pelayan
     const { kategori, ide, gayaBahasa, gayaVisual } = req.body;
+    
+    // Validasi input dasar
+    if (!kategori || !ide || !gayaBahasa || !gayaVisual) {
+        return res.status(400).json({ error: "Input tidak lengkap. Semua kolom harus diisi." });
+    }
 
-    // Rakit 'Super Prompt' yang sudah kita diskusikan
     const prompt = `
       Anda adalah seorang penulis skrip dan direktur seni AI yang ahli.
       Buatlah skrip untuk YouTube Shorts berdasarkan parameter berikut:
@@ -34,17 +40,18 @@ export default async function handler(req, res) {
       Pastikan narasi dan prompt visualnya menyatu dan berkualitas tinggi.
     `;
 
-    // Kirim prompt ke Gemini dan tunggu hasilnya
     const result = await model.generateContent(prompt);
     const response = await result.response;
     const text = response.text();
 
-    // Kirim kembali hasil masakan (teks dari AI) ke Pelayan
+    // Pastikan mengirim JSON yang valid saat berhasil
     res.status(200).json({ script: text });
 
   } catch (error) {
-    // Jika ada error di dapur, kirim pesan error
-    console.error(error);
-    res.status(500).json({ error: 'Terjadi kesalahan saat memproses permintaan.' });
+    // Ini bagian terpenting: menangani error dari Google atau lainnya
+    console.error("Error dari Gemini atau proses lainnya:", error);
+    
+    // Kirim kembali pesan error yang lebih spesifik dalam format JSON
+    res.status(500).json({ error: `Terjadi kesalahan saat menghubungi AI: ${error.message}` });
   }
 }
