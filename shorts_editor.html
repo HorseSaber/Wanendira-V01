@@ -8,7 +8,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Alata&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
     <style>
-        :root{--navy-dark:#0A192F;--gold-accent:#F7B733;--navy-light:#132F4C;--text-primary:#E6F1FF;--text-secondary:#8892B0;--hover-bg:#1d3b5c;--error-color:#ff4d4d}
+        :root{--navy-dark:#0A192F;--gold-accent:#F7B733;--navy-light:#132F4C;--text-primary:#E6F1FF;--text-secondary:#8892B0;--hover-bg:#1d3b5c;--error-color:#e57373}
+        @keyframes spin{to{transform:rotate(360deg)}}
         body{background-color:var(--navy-dark);color:var(--text-primary);font-family:'Nunito',sans-serif;margin:0}
         header{display:flex;justify-content:space-between;align-items:center;padding:20px 5%;border-bottom:1px solid var(--navy-light)}
         .brand-logo{font-family:'Alata',sans-serif;font-size:2em;color:var(--text-primary);text-decoration:none}
@@ -22,19 +23,21 @@
         .ide-generator-btn:hover { background-color: var(--gold-accent); color: var(--navy-dark); }
         textarea{width:100%;padding:15px;border-radius:5px;border:1px solid var(--navy-light);background-color:var(--navy-light);color:var(--text-primary);font-family:'Nunito',sans-serif;font-size:1em;box-sizing:border-box;min-height:150px;resize:vertical}
         .custom-select-wrapper{position:relative;width:100%}.select-hidden{display:none}.select-styled{display:flex;justify-content:space-between;align-items:center;background-color:var(--navy-light);padding:15px;border-radius:5px;border:1px solid var(--navy-light);cursor:pointer;transition:all .2s ease-in-out}.select-styled:hover{border-color:var(--gold-accent)}.select-styled.active{border-color:var(--gold-accent);border-radius:5px 5px 0 0}.select-styled::after{content:"";width:0;height:0;border-left:6px solid transparent;border-right:6px solid transparent;border-top:6px solid var(--text-secondary)}.select-options{display:none;position:absolute;top:100%;left:0;right:0;z-index:99;background-color:var(--navy-light);border-radius:0 0 5px 5px;border:1px solid var(--gold-accent);border-top:0;max-height:250px;overflow-y:auto}.select-options .option-item{padding:15px;color:var(--text-primary);cursor:pointer;transition:all .2s ease-in-out;border-top:1px solid #1a334f}.select-options .option-item:hover{background-color:var(--hover-bg);color:var(--gold-accent)}.optgroup-label{padding:10px 15px;color:var(--gold-accent);font-family:'Alata',sans-serif;font-weight:bold;font-size:0.9em;text-transform:uppercase;border-top:1px solid #1a334f;background-color:var(--navy-dark)}.select-options .option-item:first-of-type, .optgroup-label:first-child{border-top:none}
-        .generate-button{background-color:var(--gold-accent);color:var(--navy-dark);border:none;padding:16px 30px;border-radius:5px;cursor:pointer;font-family:'Nunito',sans-serif;font-weight:800;font-size:1.2em;transition:all .3s ease;width:100%;margin-top:10px}
+        .generate-button{background-color:var(--gold-accent);color:var(--navy-dark);border:none;padding:16px 30px;border-radius:5px;cursor:pointer;font-family:'Nunito',sans-serif;font-weight:800;font-size:1.2em;transition:all .3s ease;width:100%;margin-top:10px; display: flex; align-items: center; justify-content: center; gap: 10px;}
         .generate-button:disabled{background-color:var(--text-secondary);cursor:not-allowed}
-        .hasil-container{margin-top:30px;width:100%;padding:25px;background-color:var(--navy-light);border-radius:10px;min-height:200px;border:1px dashed var(--text-secondary);box-sizing:border-box}
-        .hasil-container h3{font-family:'Alata',sans-serif;color:var(--gold-accent);margin-top:0;font-size:1.5em;border-bottom: 1px solid var(--navy-dark); padding-bottom: 10px; margin-bottom: 20px;}
-        #hasil-content > * { margin-bottom: 15px; }
-        .hasil-subjudul { color: var(--gold-accent); font-family: 'Alata'; font-size: 1.2em; margin-bottom: 5px !important; }
-        .hasil-deskripsi, .hasil-tags, .hasil-hashtags { color: var(--text-secondary); font-style: italic; line-height: 1.6; }
+        .loader { width: 18px; height: 18px; border: 2px solid var(--navy-dark); border-top-color: transparent; border-radius: 50%; animation: spin 1s linear infinite; }
+        .hasil-container{display:none;margin-top:30px;width:100%;padding:25px;background-color:var(--navy-light);border-radius:10px;border:1px dashed var(--text-secondary);box-sizing:border-box}
+        .hasil-item { margin-bottom: 20px; }
+        .hasil-item h4 { font-family:'Alata',sans-serif;color:var(--gold-accent);margin-top:0;font-size:1.2em; margin-bottom: 8px;}
+        .hasil-item p { margin: 0; line-height: 1.6; color: var(--text-primary); }
+        .hasil-item p.meta-info { color: var(--text-secondary); font-style: italic; }
         .segment-block { background-color: var(--navy-dark); padding: 15px; border-radius: 8px; border-left: 3px solid var(--gold-accent); margin-top: 10px; }
         .segment-title { font-weight: 800; color: var(--text-primary); margin-bottom: 10px !important; }
         .segment-narasi { color: var(--text-primary); line-height: 1.6; }
-        .segment-prompt { color: var(--text-secondary); font-size: 0.9em; line-height: 1.5; font-style: italic; margin-top: 10px; padding-top: 10px; border-top: 1px dashed #2c4a6e; }
+        .segment-prompt { color: var(--text-secondary); font-size: 0.9em; line-height: 1.5; font-style: italic; margin-top: 15px; padding-top: 15px; border-top: 1px dashed #2c4a6e; }
+        #hasil-loading, #hasil-error { text-align: center; padding: 20px; }
         .error-message {color: var(--error-color) !important; font-weight: bold;}
-        .action-buttons { display: none; width: 100%; justify-content: flex-end; gap: 10px; margin-top: 20px; padding-top: 20px; border-top: 1px solid var(--navy-dark); }
+        .action-buttons { display: flex; width: 100%; justify-content: flex-end; gap: 10px; margin-top: 25px; padding-top: 20px; border-top: 1px solid var(--navy-dark); }
         .action-buttons button { font-size: 0.9em; padding: 8px 16px; background-color: transparent; color: var(--gold-accent); border: 1px solid var(--gold-accent); cursor: pointer; border-radius: 5px; transition: all 0.2s ease; display: inline-flex; align-items: center; gap: 6px; }
         .action-buttons button:hover { background-color: var(--gold-accent); color: var(--navy-dark); }
     </style>
@@ -54,108 +57,34 @@
             <div class="custom-select-wrapper"><label for="gaya-visual">4. Gaya Visual</label><select id="gaya-visual" class="select-hidden"><option value="cinematic">Cinematic (Realistis)</option><option value="anime">Anime</option><option value="kartun-3d">Kartun 3D</option></select></div>
             <button id="generateBtn" class="generate-button">✨ Buat Skrip Lengkap!</button>
             
-            <div class="hasil-container">
-                <h3>Hasil Skrip & Prompt Visual</h3>
-                <div id="hasil-content">
-                    <p style="color: var(--text-secondary);">Hasil lengkap akan muncul di sini...</p>
-                </div>
-                <div id="actionButtons" class="action-buttons">
-                    <button id="btnCopy"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg> Salin</button>
-                    <button id="btnDownload"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg> Unduh</button>
-                    <button id="btnSave"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg> Simpan</button>
-                </div>
+            <div id="hasilContainer" class="hasil-container">
+                <!-- Konten akan dirender di sini oleh JavaScript -->
             </div>
         </div>
     </main>
 
-    <!-- ========================================================= -->
-    <!-- KODE JAVASCRIPT LENGKAP DI SINI (TIDAK ADA YANG DIHAPUS) -->
-    <!-- ========================================================= -->
     <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // BAGIAN 1: LOGIKA DROPDOWN CUSTOM
-        document.querySelectorAll('.custom-select-wrapper').forEach(function(wrapper) {
-            const selectElement = wrapper.querySelector('select');
-            const styledSelect = document.createElement('div');
-            styledSelect.setAttribute('class', 'select-styled');
-            styledSelect.textContent = selectElement.options[selectElement.selectedIndex].text;
-            
-            const optionsList = document.createElement('div');
-            optionsList.setAttribute('class', 'select-options');
-            
-            const options = Array.from(selectElement.children);
-            
-            options.forEach(function(item) {
-                if (item.tagName === 'OPTGROUP') {
-                    const groupLabel = document.createElement('div');
-                    groupLabel.textContent = item.label;
-                    groupLabel.classList.add('optgroup-label');
-                    optionsList.appendChild(groupLabel);
-                    
-                    const groupOptions = Array.from(item.children);
-                    groupOptions.forEach(function(option) {
-                        addOption(option);
-                    });
-                } else {
-                    addOption(item);
-                }
-            });
+        // === BAGIAN 1: LOGIKA DROPDOWN CUSTOM (SUDAH STABIL) ===
+        // ... (Kode dropdown custom yang panjang dari sebelumnya ada di sini) ...
+        document.querySelectorAll('.custom-select-wrapper').forEach(function(wrapper) {const selectElement=wrapper.querySelector('select');const styledSelect=document.createElement('div');styledSelect.setAttribute('class','select-styled');styledSelect.textContent=selectElement.options[selectElement.selectedIndex].text;const optionsList=document.createElement('div');optionsList.setAttribute('class','select-options');const options=Array.from(selectElement.children);options.forEach(function(item){if(item.tagName==='OPTGROUP'){const groupLabel=document.createElement('div');groupLabel.textContent=item.label;groupLabel.classList.add('optgroup-label');optionsList.appendChild(groupLabel);const groupOptions=Array.from(item.children);groupOptions.forEach(function(option){addOption(option)})}else{addOption(item)}});function addOption(option){const optionDiv=document.createElement('div');optionDiv.textContent=option.textContent;optionDiv.classList.add('option-item');optionDiv.setAttribute('data-value',option.value);optionDiv.addEventListener('click',function(e){e.stopPropagation();styledSelect.textContent=this.textContent;selectElement.value=this.getAttribute('data-value');optionsList.style.display='none';styledSelect.classList.remove('active')});optionsList.appendChild(optionDiv)}wrapper.appendChild(styledSelect);wrapper.appendChild(optionsList);styledSelect.addEventListener('click',function(e){e.stopPropagation();closeAllSelects(this);const isHidden=optionsList.style.display==='none'||optionsList.style.display==='';optionsList.style.display=isHidden?'block':'none';this.classList.toggle('active',isHidden)})});function closeAllSelects(elmnt){document.querySelectorAll('.select-options').forEach(function(options){if(!elmnt||elmnt.nextSibling!==options){options.style.display='none';if(options.previousSibling&&options.previousSibling.classList){options.previousSibling.classList.remove('active')}}})}document.addEventListener('click',function(){closeAllSelects(null)});
 
-            function addOption(option) {
-                const optionDiv = document.createElement('div');
-                optionDiv.textContent = option.textContent;
-                optionDiv.classList.add('option-item');
-                optionDiv.setAttribute('data-value', option.value);
-                
-                optionDiv.addEventListener('click', function(e) {
-                    e.stopPropagation();
-                    styledSelect.textContent = this.textContent;
-                    selectElement.value = this.getAttribute('data-value');
-                    optionsList.style.display = 'none';
-                    styledSelect.classList.remove('active');
-                });
-                optionsList.appendChild(optionDiv);
-            }
-            
-            wrapper.appendChild(styledSelect);
-            wrapper.appendChild(optionsList);
-            
-            styledSelect.addEventListener('click', function(e) {
-                e.stopPropagation();
-                closeAllSelects(this);
-                const isHidden = optionsList.style.display === 'none' || optionsList.style.display === '';
-                optionsList.style.display = isHidden ? 'block' : 'none';
-                this.classList.toggle('active', isHidden);
-            });
-        });
-        
-        function closeAllSelects(elmnt) {
-            document.querySelectorAll('.select-options').forEach(function(options) {
-                if (!elmnt || elmnt.nextSibling !== options) {
-                    options.style.display = 'none';
-                    if (options.previousSibling && options.previousSibling.classList) {
-                       options.previousSibling.classList.remove('active');
-                    }
-                }
-            });
-        }
-        
-        document.addEventListener('click', function() {
-            closeAllSelects(null);
-        });
-
-        // BAGIAN 2: LOGIKA FITUR-FITUR APLIKASI
+        // === BAGIAN 2: LOGIKA APLIKASI UTAMA (DIRAPIKAN) ===
         const generateBtn = document.getElementById('generateBtn');
-        const hasilContent = document.getElementById('hasil-content');
+        const hasilContainer = document.getElementById('hasilContainer');
         const btnBuatIde = document.getElementById('btnBuatIde');
         const ideTextarea = document.getElementById('ide');
-        const actionButtons = document.getElementById('actionButtons');
         let fullScriptText = '';
 
-        btnBuatIde.addEventListener('click', async () => {
+        // -- Event Listener untuk Tombol-tombol --
+        btnBuatIde.addEventListener('click', handleBuatIde);
+        generateBtn.addEventListener('click', handleGenerateScript);
+
+        // -- Fungsi untuk Menangani Pembuatan Ide --
+        async function handleBuatIde() {
             const kategori = document.getElementById('kategori').value;
             btnBuatIde.disabled = true;
-            btnBuatIde.textContent = 'Mencari...';
+            btnBuatIde.innerHTML = '<div class="loader"></div>';
 
             try {
                 const response = await fetch('/api/generate', {
@@ -164,44 +93,70 @@
                     body: JSON.stringify({ task: 'generate_idea', kategori: kategori }),
                 });
                 const data = await response.json();
-                if (!response.ok) throw new Error(data.error || 'Gagal mengambil ide dari server.');
+                if (!response.ok) throw new Error(data.error || 'Gagal mengambil ide.');
                 ideTextarea.value = data.generated_idea;
             } catch (error) {
                 alert('Gagal membuat ide: ' + error.message);
             } finally {
                 btnBuatIde.disabled = false;
-                btnBuatIde.textContent = '✨ Buatkan Ide';
+                btnBuatIde.innerHTML = '✨ Buatkan Ide';
             }
-        });
+        }
 
-        function renderStructuredResult(scriptText) {
-            fullScriptText = scriptText;
-            hasilContent.innerHTML = '';
+        // -- Fungsi untuk Menangani Generate Script Utama --
+        async function handleGenerateScript() {
+            const kategori = document.getElementById('kategori').value;
+            const ide = ideTextarea.value;
+            const gayaBahasa = document.getElementById('gaya-bahasa').value;
+            const gayaVisual = document.getElementById('gaya-visual').value;
+
+            if (!ide.trim()) {
+                alert("Bro, ide utamanya jangan kosong ya!");
+                return;
+            }
+
+            setLoadingState(true);
+
+            try {
+                const response = await fetch('/api/generate', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ kategori, ide, gayaBahasa, gayaVisual, task: 'generate_script' }),
+                });
+                const data = await response.json();
+                if (!response.ok) throw new Error(data.error || 'Dapur sedang sibuk.');
+                
+                fullScriptText = data.script; // Simpan teks mentah
+                renderSuccessResult(fullScriptText);
+
+            } catch (error) {
+                console.error("Terjadi kesalahan:", error);
+                renderErrorResult(`Waduh, ada masalah bro: ${error.message}`);
+            } finally {
+                setLoadingState(false);
+            }
+        }
+
+        // -- Fungsi untuk Mengatur Tampilan Loading --
+        function setLoadingState(isLoading) {
+            generateBtn.disabled = isLoading;
+            if (isLoading) {
+                generateBtn.innerHTML = '<div class="loader"></div> Sedang Meracik...';
+                hasilContainer.style.display = 'block';
+                hasilContainer.innerHTML = '<div id="hasil-loading"><div class="loader" style="margin:auto; width:30px; height:30px;"></div><p>Pelayan sedang menuju dapur... Mohon tunggu...</p></div>';
+            } else {
+                generateBtn.innerHTML = '✨ Buat Skrip Lengkap!';
+            }
+        }
+
+        // -- Fungsi untuk Menampilkan Hasil Sukses --
+        function renderSuccessResult(scriptText) {
+            hasilContainer.innerHTML = ''; // Hapus spinner
             const lines = scriptText.split('\n');
 
+            let narasiHtml = '';
             lines.forEach(line => {
-                if (line.trim() === '') return;
-                
-                if (line.startsWith('JUDUL:') || line.startsWith('DESKRIPSI:') || line.startsWith('TAGS:') || line.startsWith('HASHTAGS:') || line.startsWith('NARASI:')) {
-                    const parts = line.split(':');
-                    const title = parts[0].trim();
-                    const content = parts.slice(1).join(':').trim();
-                    
-                    const el = document.createElement('h4');
-                    el.className = 'hasil-subjudul';
-                    el.textContent = title;
-                    if (title === 'NARASI') el.style.marginTop = '20px';
-                    hasilContent.appendChild(el);
-                    
-                    if (content) {
-                        const contentEl = document.createElement('p');
-                        contentEl.textContent = content;
-                        if (title !== 'JUDUL' && title !== 'NARASI') {
-                            contentEl.className = `hasil-${title.toLowerCase()}`;
-                        }
-                        hasilContent.appendChild(contentEl);
-                    }
-                } else if (line.startsWith('SEGMENT')) {
+                if (line.startsWith('SEGMENT')) {
                     const segmentBlock = document.createElement('div');
                     segmentBlock.className = 'segment-block';
                     
@@ -212,73 +167,52 @@
                     const narasiText = narasiMatch ? narasiMatch[1].trim() : line.substring(line.indexOf(':') + 1).trim();
                     const promptText = promptMatch ? `(Prompt Visual: ${promptMatch[1].trim()})` : '';
 
-                    const titleEl = document.createElement('p');
-                    titleEl.className = 'segment-title';
-                    titleEl.textContent = segmentTitleText;
-                    segmentBlock.appendChild(titleEl);
-
-                    const narasiEl = document.createElement('p');
-                    narasiEl.className = 'segment-narasi';
-                    narasiEl.textContent = narasiText;
-                    segmentBlock.appendChild(narasiEl);
-                    
+                    segmentBlock.innerHTML = `<p class="segment-title">${segmentTitleText}</p><p class="segment-narasi">${narasiText}</p>`;
                     if (promptText) {
-                        const promptEl = document.createElement('p');
-                        promptEl.className = 'segment-prompt';
-                        promptEl.textContent = promptText;
-                        segmentBlock.appendChild(promptEl);
+                        segmentBlock.innerHTML += `<p class="segment-prompt">${promptText}</p>`;
                     }
-                    
-                    hasilContent.appendChild(segmentBlock);
+                    narasiHtml += segmentBlock.outerHTML;
                 }
             });
-            actionButtons.style.display = 'flex';
+
+            hasilContainer.innerHTML = `
+                <div class="hasil-item"><h4>JUDUL</h4><p>${getSectionContent(lines, 'JUDUL:')}</p></div>
+                <div class="hasil-item"><h4>DESKRIPSI</h4><p class="meta-info">${getSectionContent(lines, 'DESKRIPSI:')}</p></div>
+                <div class="hasil-item"><h4>TAGS</h4><p class="meta-info">${getSectionContent(lines, 'TAGS:')}</p></div>
+                <div class="hasil-item"><h4>HASHTAGS</h4><p class="meta-info">${getSectionContent(lines, 'HASHTAGS:')}</p></div>
+                <div class="hasil-item"><h4>NARASI SCRIPT</h4>${narasiHtml}</div>
+                <div id="actionButtons" class="action-buttons">
+                    <button id="btnCopy"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg> Salin</button>
+                    <button id="btnDownload"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg> Unduh</button>
+                    <button id="btnSave"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg> Simpan</button>
+                </div>
+            `;
+
+            // Tambahkan event listener ke tombol yang baru dibuat
+            document.getElementById('btnCopy').addEventListener('click', handleCopy);
+            document.getElementById('btnDownload').addEventListener('click', handleDownload);
+            document.getElementById('btnSave').addEventListener('click', handleSave);
+        }
+        
+        // -- Fungsi untuk Menampilkan Error --
+        function renderErrorResult(message) {
+            hasilContainer.style.display = 'block';
+            hasilContainer.innerHTML = `<div id="hasil-error"><p class="error-message">${message}</p></div>`;
+        }
+        
+        // -- Helper function untuk mengambil konten --
+        function getSectionContent(lines, prefix) {
+            const line = lines.find(l => l.startsWith(prefix));
+            return line ? line.substring(prefix.length).trim() : 'N/A';
         }
 
-        generateBtn.addEventListener('click', async () => {
-            const kategori = document.getElementById('kategori').value;
-            const ide = document.getElementById('ide').value;
-            const gayaBahasa = document.getElementById('gaya-bahasa').value;
-            const gayaVisual = document.getElementById('gaya-visual').value;
-
-            if (!ide.trim()) {
-                alert("Bro, ide utamanya jangan kosong ya!");
-                return;
-            }
-
-            generateBtn.disabled = true;
-            generateBtn.textContent = 'Sedang Meracik Ide...';
-            hasilContent.innerHTML = '<p>Pelayan sedang menuju dapur... Mohon tunggu sebentar...</p>';
-            actionButtons.style.display = 'none';
-
-            try {
-                const response = await fetch('/api/generate', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ kategori, ide, gayaBahasa, gayaVisual, task: 'generate_script' }),
-                });
-                const data = await response.json();
-                if (!response.ok) {
-                    throw new Error(data.error || 'Dapur sedang sibuk atau ada masalah.');
-                }
-                renderStructuredResult(data.script);
-            } catch (error) {
-                console.error("Terjadi kesalahan:", error);
-                const errorMessage = `Waduh, ada masalah bro: ${error.message}`;
-                hasilContent.innerHTML = `<p class="error-message">${errorMessage}</p>`;
-            } finally {
-                generateBtn.disabled = false;
-                generateBtn.textContent = '✨ Buat Skrip Lengkap!';
-            }
-        });
-
-        document.getElementById('btnCopy').addEventListener('click', () => {
+        // -- Fungsi-fungsi untuk Tombol Aksi --
+        function handleCopy() {
             navigator.clipboard.writeText(fullScriptText)
                 .then(() => { alert('Seluruh hasil berhasil disalin!'); })
                 .catch(err => { alert('Gagal menyalin: ' + err); });
-        });
-
-        document.getElementById('btnDownload').addEventListener('click', () => {
+        }
+        function handleDownload() {
             const blob = new Blob([fullScriptText], { type: 'text/plain;charset=utf-8' });
             const a = document.createElement('a');
             a.href = URL.createObjectURL(blob);
@@ -286,11 +220,10 @@
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a);
-        });
-
-        document.getElementById('btnSave').addEventListener('click', () => {
-            alert('Fitur "Simpan Riwayat" sedang dalam pengembangan!\nIni akan memerlukan koneksi ke database Firestore.');
-        });
+        }
+        function handleSave() {
+            alert('Fitur "Simpan Riwayat" sedang dalam pengembangan!');
+        }
     });
     </script>
 </body>
