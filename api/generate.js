@@ -25,54 +25,42 @@ export default async function handler(req, res) {
 
     // === CETAK BIRU PROMPT YANG DI-UPGRADE ===
     const prompt = `
-      Tugas Anda adalah membuat skrip konten YouTube Shorts berdurasi total 60 detik.
-      Fokus konten adalah motivasi pria dewasa dengan sudut pandang dominan, kuat, dan maskulin.
-      Topik akan berpusat pada sebuah kutipan yang mencerminkan kontrol, dominasi, disiplin, atau keunggulan hidup sebagai pria berkelas.
+Tugas Anda adalah membuat skrip konten YouTube Shorts berdurasi total 60 detik.
+Fokus konten adalah motivasi pria dewasa dengan sudut pandang dominan, kuat, dan maskulin.
+Topik akan berpusat pada sebuah kutipan yang mencerminkan kontrol, dominasi, disiplin, atau keunggulan hidup sebagai pria berkelas.
 
-      ⚠️ STRUKTUR OUTPUT WAJIB (Tanpa improvisasi atau perubahan format):
+⚠️ STRUKTUR OUTPUT WAJIB (Tanpa improvisasi atau perubahan format):
+TIDAK BOLEH MENGUBAH STRUKTUR INI DALAM KONDISI APA PUN.
+PELANGGARAN STRUKTUR AKAN DIANGGAP KELUAR DARI TUGAS.
 
-      1. JUDUL: (maksimal 80 karakter, padat, tajam, tidak lebay)
-      2. DESKRIPSI: (maksimal 4 baris, gaya tuturan pria tegas yang to the point, sertakan hashtag di akhir)
-      3. TAGS: (dipisahkan dengan koma, SEO relevan dengan tema dominasi, pria, uang, kontrol, mentalitas alpha)
-      4. NARASI (Durasi Total 60 Detik):
-         - Bagi menjadi 6 segmen, masing-masing 10 detik
-         - Formatnya: **[0–10s]**, **[10–20s]**, dst
-         - Hindari kalimat panjang. Gunakan ritme pendek, tegas, powerful
+Tulis jawabanmu persis dengan urutan berikut:
 
-      ------------------------------------
+JUDUL: ...
+DESKRIPSI: ...
+TAGS: ...
+HASHTAGS: ...
+NARASI:
+[0–10s]
+[10–20s]
+[20–30s]
+[30–40s]
+[40–50s]
+[50–60s]
 
-      🧠 GAYA BAHASA: "ALPHA GENTLE / PRIA MASKULIN DOMINAN"
+🧠 GAYA BAHASA: "ALPHA GENTLE / PRIA MASKULIN DOMINAN"
 
-      Spesifikasi Gaya:
-      - Nada suara tenang, rendah, percaya diri
-      - Gaya tuturan singkat, penuh makna, tidak emosional berlebihan
-      - Hindari kata “teman-teman”, “yuk”, “semangat ya”, “percaya deh”, dan semua bentuk ajakan lembek
-      - Gunakan kata-kata: **kendali, dominasi, kendurkan, tahan, arahkan, tetapkan, disiplin, batas, kuasai**
-      - Tonenya seperti mentor atau ayah yang keras tapi ingin lo naik level
-      - Jangan ajarkan jadi kuat, langsung ajak jadi kuat
+Spesifikasi Gaya:
+- Nada suara tenang, rendah, percaya diri
+- Kalimat singkat, tidak emosional berlebihan
+- Hindari kata-kata lembek atau ajakan manja
+- Gunakan kosakata: kendali, dominasi, arahkan, kuasai, tahan, disiplin, batas, tegas
 
-      🛑 HINDARI:
-      - Bahasa lembut, gaya sinetron, curhat, atau over-empati
-      - Gaya motivasi biasa, penuh harapan kosong
-      - Improvisasi gaya narasi
+🛑 DILARANG:
+- Mengubah struktur
+- Menambah bagian
+- Menggunakan gaya motivasi biasa, curhat, sinetron, atau puitis
 
-      ------------------------------------
+📌 KUTIPAN YANG AKAN DIBAHAS:
+"${kutipan}"
 
-      📌 KUTIPAN YANG AKAN DIBAHAS:
-
-      **"${kutipan}"**
-
-      Tugas Anda: Buat struktur konten YouTube Shorts 60 detik berdasarkan kutipan tersebut, menggunakan seluruh struktur dan gaya yang sudah dijelaskan di atas.
-    `;
-
-    const result = await model.generateContent(prompt);
-    const response = await result.response;
-    const text = response.text();
-
-    res.status(200).json({ script: text });
-
-  } catch (error) {
-    console.error("Error dari Gemini atau proses lainnya:", error);
-    res.status(500).json({ error: `Terjadi kesalahan saat menghubungi AI: ${error.message}` });
-  }
-}
+Berikan hasil dalam format teks biasa. Tanpa markdown, tanpa emoji, tanpa penjelasan tambahan.
