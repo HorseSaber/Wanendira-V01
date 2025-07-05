@@ -127,7 +127,6 @@ Spesifikasi Gaya:
 - Nada suara tenang, rendah, percaya diri
 - Kalimat singkat, tidak emosional berlebihan
 - Hindari kata-kata lembek atau ajakan manja
-- Gunakan kosakata: kendali, dominasi, arahkan, kuasai, tahan, disiplin, batas, tegas
 
 🛑 DILARANG:
 - Mengubah struktur
