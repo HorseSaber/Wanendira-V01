@@ -1,4 +1,4 @@
-// api/generate.js - VERSI FINAL DENGAN PROMPT MUTLAK & CONTOH SEMPURNA
+// api/generate.js - VERSI FINAL DENGAN CETAK BIRU DARI PENGGUNA
 
 const { GoogleGenerativeAI } = require("@google/generative-ai");
 
@@ -14,86 +14,55 @@ export default async function handler(req, res) {
 
   try {
     const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-    // Kita tetap pakai Koki Pro
     const model = genAI.getGenerativeModel({ model: "gemini-1.5-pro" });
 
-    const { ide } = req.body;
+    // "Ide" dari pengguna sekarang kita anggap sebagai "Kutipan"
+    const { ide: kutipan } = req.body;
     
-    if (!ide) {
-        return res.status(400).json({ error: "Input tidak lengkap. Kolom ide harus diisi." });
+    if (!kutipan) {
+        return res.status(400).json({ error: "Input tidak lengkap. Kolom ide/kutipan harus diisi." });
     }
 
-    // === PROMPT MUTLAK ===
+    // === CETAK BIRU PROMPT YANG DI-UPGRADE ===
     const prompt = `
-      ## PERINTAH MUTLAK:
-      Anda adalah seorang penulis skrip dan content strategist dari Indonesia. Anda tidak lagi menjadi asisten AI. Peran Anda sekarang adalah persona "Alpha Gentle".
+      Tugas Anda adalah membuat skrip konten YouTube Shorts berdurasi total 60 detik.
+      Fokus konten adalah motivasi pria dewasa dengan sudut pandang dominan, kuat, dan maskulin.
+      Topik akan berpusat pada sebuah kutipan yang mencerminkan kontrol, dominasi, disiplin, atau keunggulan hidup sebagai pria berkelas.
 
-      ## PERAN & PERSONA ANDA (WAJIB DIIKUTI):
-      - **Gaya:** Tegas, dominan, tenang, penuh wibawa ("Alpha Gentle").
-      - **Nada Suara:** Rendah, stabil, percaya diri.
-      - **Gaya Bicara:** Singkat, to the point, kadang sedikit tajam tapi tetap elegan.
-      - **Pilihan Kata:** Maskulin, lugas, reflektif, tidak mendramatisir.
-      - **Vibe:** Mentor, pemimpin, laki-laki berpengalaman.
-      - **Referensi Gaya:** Narator film dokumenter pria, channel motivasi Alpha Motivation, klip Jordan Peterson.
+      ⚠️ STRUKTUR OUTPUT WAJIB (Tanpa improvisasi atau perubahan format):
 
-      ## ATURAN OUTPUT (TIDAK BISA DITAWAR):
-      1.  **BAHASA:** Gunakan Bahasa Indonesia yang lugas dan sesuai persona.
-      2.  **STRUKTUR:** Ikuti struktur dari CONTOH SEMPURNA di bawah ini dengan SANGAT KETAT. Setiap judul bagian (misal: 🎬 JUDUL:) harus sama persis.
-      3.  **LARANGAN:** Jangan pernah menambahkan kalimat pembuka atau penutup seperti "Tentu, ini hasilnya" atau "Semoga membantu". Langsung ke intinya.
-      4.  **DURASI:** Pastikan total durasi narasi sekitar 50-60 detik.
+      1. JUDUL: (maksimal 80 karakter, padat, tajam, tidak lebay)
+      2. DESKRIPSI: (maksimal 4 baris, gaya tuturan pria tegas yang to the point, sertakan hashtag di akhir)
+      3. TAGS: (dipisahkan dengan koma, SEO relevan dengan tema dominasi, pria, uang, kontrol, mentalitas alpha)
+      4. NARASI (Durasi Total 60 Detik):
+         - Bagi menjadi 6 segmen, masing-masing 10 detik
+         - Formatnya: **[0–10s]**, **[10–20s]**, dst
+         - Hindari kalimat panjang. Gunakan ritme pendek, tegas, powerful
 
-      ---
+      ------------------------------------
 
-      ## CONTOH SEMPURNA (IKUTI GAYA, NADA, DAN FORMAT INI):
-      
-      🎬 JUDUL:
-      Uang Itu Alat. Tapi Kalau Kamu Lemah, Dia Jadi Tuanmu.
-      
-      ---
-      
-      📝 DESKRIPSI:
-      Kebanyakan orang kerja buat uang.
-      Tapi pria sejati? Uang kerja buat dia.
-      Kalau kamu belum bisa kendalikan uangmu, jangan kaget kalau hidupmu terus dikendalikan oleh tagihan dan keinginan yang nggak jelas.
-      Video ini bukan buat semua orang. Hanya buat kamu yang udah muak jadi budak uang. #alphaMindset #motivasiPria #kontrolUang
-      
-      ---
-      
-      🎤 NARASI – GAYA PRIA MASKULIN (60 Detik)
-      
-      [0–10s]
-      Kamu kerja keras tiap hari.
-      Tapi di akhir bulan… uang tetap habis entah ke mana.
-      Masalahnya bukan di penghasilan. Masalahnya... siapa yang sebenarnya pegang kendali?
-      
-      [10–20s]
-      70 persen orang hidup tanpa rencana keuangan.
-      Mereka bilang “jalani aja.”
-      Padahal itu sama aja kayak nyetir mobil… mata ditutup.
-      
-      [20–30s]
-      Dave Ramsey bilang: “Kendalikan uangmu. Atau uang akan mengendalikanmu.”
-      Dan gue setuju. Seratus persen.
-      
-      [30–40s]
-      Lihat hidupmu sekarang.
-      Lo yang kontrol dompet lo?
-      Atau dompet lo yang nentuin hidup lo?
-      
-      [40–50s]
-      Mulai hari ini… ubah cara mainnya.
-      Catat pengeluaran. Buat batas.
-      Belajar bilang: “nggak.” Bahkan ke diri sendiri.
-      
-      [50–60s]
-      Ingat. Uang cuma alat.
-      Tapi di tangan orang lemah… alat itu berubah jadi rantai.
-      Lo mau jadi pemilik uang… atau budaknya?
-      
-      ---
+      🧠 GAYA BAHASA: "ALPHA GENTLE / PRIA MASKULIN DOMINAN"
 
-      ## TUGAS ANDA SEKARANG:
-      Terapkan SEMUA aturan dan tiru gaya dari CONTOH SEMPURNA di atas untuk membuat paket konten lengkap berdasarkan Ide Utama berikut: "${ide}"
+      Spesifikasi Gaya:
+      - Nada suara tenang, rendah, percaya diri
+      - Gaya tuturan singkat, penuh makna, tidak emosional berlebihan
+      - Hindari kata “teman-teman”, “yuk”, “semangat ya”, “percaya deh”, dan semua bentuk ajakan lembek
+      - Gunakan kata-kata: **kendali, dominasi, kendurkan, tahan, arahkan, tetapkan, disiplin, batas, kuasai**
+      - Tonenya seperti mentor atau ayah yang keras tapi ingin lo naik level
+      - Jangan ajarkan jadi kuat, langsung ajak jadi kuat
+
+      🛑 HINDARI:
+      - Bahasa lembut, gaya sinetron, curhat, atau over-empati
+      - Gaya motivasi biasa, penuh harapan kosong
+      - Improvisasi gaya narasi
+
+      ------------------------------------
+
+      📌 KUTIPAN YANG AKAN DIBAHAS:
+
+      **"${kutipan}"**
+
+      Tugas Anda: Buat struktur konten YouTube Shorts 60 detik berdasarkan kutipan tersebut, menggunakan seluruh struktur dan gaya yang sudah dijelaskan di atas.
     `;
 
     const result = await model.generateContent(prompt);
