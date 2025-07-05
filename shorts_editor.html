@@ -64,23 +64,93 @@
     </main>
 
     <script>
+         // =========================================================
+    // KODE JAVASCRIPT LENGKAP, BERSIH, DAN TERFORMAT
+    // =========================================================
     document.addEventListener('DOMContentLoaded', function() {
-        // === BAGIAN 1: LOGIKA DROPDOWN CUSTOM (SUDAH STABIL) ===
-        // ... (Kode dropdown custom yang panjang dari sebelumnya ada di sini) ...
-        document.querySelectorAll('.custom-select-wrapper').forEach(function(wrapper) {const selectElement=wrapper.querySelector('select');const styledSelect=document.createElement('div');styledSelect.setAttribute('class','select-styled');styledSelect.textContent=selectElement.options[selectElement.selectedIndex].text;const optionsList=document.createElement('div');optionsList.setAttribute('class','select-options');const options=Array.from(selectElement.children);options.forEach(function(item){if(item.tagName==='OPTGROUP'){const groupLabel=document.createElement('div');groupLabel.textContent=item.label;groupLabel.classList.add('optgroup-label');optionsList.appendChild(groupLabel);const groupOptions=Array.from(item.children);groupOptions.forEach(function(option){addOption(option)})}else{addOption(item)}});function addOption(option){const optionDiv=document.createElement('div');optionDiv.textContent=option.textContent;optionDiv.classList.add('option-item');optionDiv.setAttribute('data-value',option.value);optionDiv.addEventListener('click',function(e){e.stopPropagation();styledSelect.textContent=this.textContent;selectElement.value=this.getAttribute('data-value');optionsList.style.display='none';styledSelect.classList.remove('active')});optionsList.appendChild(optionDiv)}wrapper.appendChild(styledSelect);wrapper.appendChild(optionsList);styledSelect.addEventListener('click',function(e){e.stopPropagation();closeAllSelects(this);const isHidden=optionsList.style.display==='none'||optionsList.style.display==='';optionsList.style.display=isHidden?'block':'none';this.classList.toggle('active',isHidden)})});function closeAllSelects(elmnt){document.querySelectorAll('.select-options').forEach(function(options){if(!elmnt||elmnt.nextSibling!==options){options.style.display='none';if(options.previousSibling&&options.previousSibling.classList){options.previousSibling.classList.remove('active')}}})}document.addEventListener('click',function(){closeAllSelects(null)});
 
-        // === BAGIAN 2: LOGIKA APLIKASI UTAMA (DIRAPIKAN) ===
+        // BAGIAN 1: LOGIKA DROPDOWN CUSTOM
+        document.querySelectorAll('.custom-select-wrapper').forEach(function(wrapper) {
+            const selectElement = wrapper.querySelector('select');
+            const styledSelect = document.createElement('div');
+            styledSelect.setAttribute('class', 'select-styled');
+            styledSelect.textContent = selectElement.options[selectElement.selectedIndex].text;
+            
+            const optionsList = document.createElement('div');
+            optionsList.setAttribute('class', 'select-options');
+            
+            const options = Array.from(selectElement.children);
+            
+            options.forEach(function(item) {
+                if (item.tagName === 'OPTGROUP') {
+                    const groupLabel = document.createElement('div');
+                    groupLabel.textContent = item.label;
+                    groupLabel.classList.add('optgroup-label');
+                    optionsList.appendChild(groupLabel);
+                    
+                    const groupOptions = Array.from(item.children);
+                    groupOptions.forEach(function(option) {
+                        addOption(option);
+                    });
+                } else {
+                    addOption(item);
+                }
+            });
+
+            function addOption(option) {
+                const optionDiv = document.createElement('div');
+                optionDiv.textContent = option.textContent;
+                optionDiv.classList.add('option-item');
+                optionDiv.setAttribute('data-value', option.value);
+                
+                optionDiv.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    styledSelect.textContent = this.textContent;
+                    selectElement.value = this.getAttribute('data-value');
+                    optionsList.style.display = 'none';
+                    styledSelect.classList.remove('active');
+                });
+                optionsList.appendChild(optionDiv);
+            }
+            
+            wrapper.appendChild(styledSelect);
+            wrapper.appendChild(optionsList);
+            
+            styledSelect.addEventListener('click', function(e) {
+                e.stopPropagation();
+                closeAllSelects(this);
+                const isHidden = optionsList.style.display === 'none' || optionsList.style.display === '';
+                optionsList.style.display = isHidden ? 'block' : 'none';
+                this.classList.toggle('active', isHidden);
+            });
+        });
+        
+        function closeAllSelects(elmnt) {
+            document.querySelectorAll('.select-options').forEach(function(options) {
+                if (!elmnt || elmnt.nextSibling !== options) {
+                    options.style.display = 'none';
+                    if (options.previousSibling && options.previousSibling.classList) {
+                       options.previousSibling.classList.remove('active');
+                    }
+                }
+            });
+        }
+        
+        document.addEventListener('click', function() {
+            closeAllSelects(null);
+        });
+
+
+        // BAGIAN 2: LOGIKA APLIKASI UTAMA
         const generateBtn = document.getElementById('generateBtn');
         const hasilContainer = document.getElementById('hasilContainer');
         const btnBuatIde = document.getElementById('btnBuatIde');
         const ideTextarea = document.getElementById('ide');
         let fullScriptText = '';
 
-        // -- Event Listener untuk Tombol-tombol --
         btnBuatIde.addEventListener('click', handleBuatIde);
         generateBtn.addEventListener('click', handleGenerateScript);
 
-        // -- Fungsi untuk Menangani Pembuatan Ide --
         async function handleBuatIde() {
             const kategori = document.getElementById('kategori').value;
             btnBuatIde.disabled = true;
@@ -103,7 +173,6 @@
             }
         }
 
-        // -- Fungsi untuk Menangani Generate Script Utama --
         async function handleGenerateScript() {
             const kategori = document.getElementById('kategori').value;
             const ide = ideTextarea.value;
@@ -126,7 +195,7 @@
                 const data = await response.json();
                 if (!response.ok) throw new Error(data.error || 'Dapur sedang sibuk.');
                 
-                fullScriptText = data.script; // Simpan teks mentah
+                fullScriptText = data.script;
                 renderSuccessResult(fullScriptText);
 
             } catch (error) {
@@ -137,24 +206,22 @@
             }
         }
 
-        // -- Fungsi untuk Mengatur Tampilan Loading --
         function setLoadingState(isLoading) {
             generateBtn.disabled = isLoading;
             if (isLoading) {
                 generateBtn.innerHTML = '<div class="loader"></div> Sedang Meracik...';
                 hasilContainer.style.display = 'block';
-                hasilContainer.innerHTML = '<div id="hasil-loading"><div class="loader" style="margin:auto; width:30px; height:30px;"></div><p>Pelayan sedang menuju dapur... Mohon tunggu...</p></div>';
+                hasilContainer.innerHTML = '<div id="hasil-loading" style="text-align: center; padding: 20px;"><div class="loader" style="margin:auto; width:30px; height:30px;"></div><p>Pelayan sedang menuju dapur... Mohon tunggu...</p></div>';
             } else {
                 generateBtn.innerHTML = '✨ Buat Skrip Lengkap!';
             }
         }
 
-        // -- Fungsi untuk Menampilkan Hasil Sukses --
         function renderSuccessResult(scriptText) {
-            hasilContainer.innerHTML = ''; // Hapus spinner
+            hasilContainer.innerHTML = '';
             const lines = scriptText.split('\n');
-
             let narasiHtml = '';
+
             lines.forEach(line => {
                 if (line.startsWith('SEGMENT')) {
                     const segmentBlock = document.createElement('div');
@@ -187,30 +254,25 @@
                     <button id="btnSave"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg> Simpan</button>
                 </div>
             `;
-
-            // Tambahkan event listener ke tombol yang baru dibuat
             document.getElementById('btnCopy').addEventListener('click', handleCopy);
             document.getElementById('btnDownload').addEventListener('click', handleDownload);
             document.getElementById('btnSave').addEventListener('click', handleSave);
         }
         
-        // -- Fungsi untuk Menampilkan Error --
         function renderErrorResult(message) {
             hasilContainer.style.display = 'block';
-            hasilContainer.innerHTML = `<div id="hasil-error"><p class="error-message">${message}</p></div>`;
+            hasilContainer.innerHTML = `<div id="hasil-error" style="text-align: center; padding: 20px;"><p class="error-message">${message}</p></div>`;
         }
         
-        // -- Helper function untuk mengambil konten --
         function getSectionContent(lines, prefix) {
             const line = lines.find(l => l.startsWith(prefix));
             return line ? line.substring(prefix.length).trim() : 'N/A';
         }
 
-        // -- Fungsi-fungsi untuk Tombol Aksi --
         function handleCopy() {
             navigator.clipboard.writeText(fullScriptText)
-                .then(() => { alert('Seluruh hasil berhasil disalin!'); })
-                .catch(err => { alert('Gagal menyalin: ' + err); });
+                .then(() => alert('Seluruh hasil berhasil disalin!'))
+                .catch(err => alert('Gagal menyalin: ' + err));
         }
         function handleDownload() {
             const blob = new Blob([fullScriptText], { type: 'text/plain;charset=utf-8' });
