@@ -56,7 +56,6 @@
             <div class="custom-select-wrapper"><label for="gaya-bahasa">3. Gaya Bahasa</label><select id="gaya-bahasa" class="select-hidden"><optgroup label="Gaya Motivasi"><option value="Tegas & Santai (Gaya 'Bro')">Tegas & Santai (Gaya 'Bro')</option><option value="Inspiratif & Puitis">Inspiratif & Puitis</option></optgroup><optgroup label="Gaya Narasi"><option value="Narator Dongeng (Hangat & Imajinatif)">Narator Dongeng</option><option value="Pencerita Epik (Dramatis & Megah)">Pencerita Epik</option></optgroup><optgroup label="Gaya Edukasi"><option value="Presenter Antusias (Cepat & Enerjik)">Presenter Antusias</option><option value="Pakar Tenang (Jelas & Berwibawa)">Pakar Tenang</option></optgroup></select></div>
             <div class="custom-select-wrapper"><label for="gaya-visual">4. Gaya Visual</label><select id="gaya-visual" class="select-hidden"><option value="cinematic">Cinematic (Realistis)</option><option value="anime">Anime</option><option value="kartun-3d">Kartun 3D</option></select></div>
             <button id="generateBtn" class="generate-button">✨ Buat Skrip Lengkap!</button>
-            
             <div id="hasilContainer" class="hasil-container">
                 <!-- Konten akan dirender di sini oleh JavaScript -->
             </div>
@@ -64,11 +63,7 @@
     </main>
 
     <script>
-         // =========================================================
-    // KODE JAVASCRIPT LENGKAP, BERSIH, DAN TERFORMAT
-    // =========================================================
     document.addEventListener('DOMContentLoaded', function() {
-
         // BAGIAN 1: LOGIKA DROPDOWN CUSTOM
         document.querySelectorAll('.custom-select-wrapper').forEach(function(wrapper) {
             const selectElement = wrapper.querySelector('select');
@@ -140,7 +135,6 @@
             closeAllSelects(null);
         });
 
-
         // BAGIAN 2: LOGIKA APLIKASI UTAMA
         const generateBtn = document.getElementById('generateBtn');
         const hasilContainer = document.getElementById('hasilContainer');
@@ -155,7 +149,6 @@
             const kategori = document.getElementById('kategori').value;
             btnBuatIde.disabled = true;
             btnBuatIde.innerHTML = '<div class="loader"></div>';
-
             try {
                 const response = await fetch('/api/generate', {
                     method: 'POST',
@@ -183,9 +176,7 @@
                 alert("Bro, ide utamanya jangan kosong ya!");
                 return;
             }
-
             setLoadingState(true);
-
             try {
                 const response = await fetch('/api/generate', {
                     method: 'POST',
@@ -194,10 +185,8 @@
                 });
                 const data = await response.json();
                 if (!response.ok) throw new Error(data.error || 'Dapur sedang sibuk.');
-                
                 fullScriptText = data.script;
                 renderSuccessResult(fullScriptText);
-
             } catch (error) {
                 console.error("Terjadi kesalahan:", error);
                 renderErrorResult(`Waduh, ada masalah bro: ${error.message}`);
@@ -226,14 +215,11 @@
                 if (line.startsWith('SEGMENT')) {
                     const segmentBlock = document.createElement('div');
                     segmentBlock.className = 'segment-block';
-                    
                     const narasiMatch = line.match(/:(.*?)\+/);
                     const promptMatch = line.match(/\(Prompt Visual:(.*?)\)/);
-
                     const segmentTitleText = line.split(':')[0].trim();
                     const narasiText = narasiMatch ? narasiMatch[1].trim() : line.substring(line.indexOf(':') + 1).trim();
                     const promptText = promptMatch ? `(Prompt Visual: ${promptMatch[1].trim()})` : '';
-
                     segmentBlock.innerHTML = `<p class="segment-title">${segmentTitleText}</p><p class="segment-narasi">${narasiText}</p>`;
                     if (promptText) {
                         segmentBlock.innerHTML += `<p class="segment-prompt">${promptText}</p>`;
