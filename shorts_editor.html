@@ -35,7 +35,7 @@
         .segment-prompt { color: var(--text-secondary); font-size: 0.9em; line-height: 1.5; font-style: italic; margin-top: 10px; padding-top: 10px; border-top: 1px dashed #2c4a6e; }
         .error-message {color: var(--error-color) !important; font-weight: bold;}
         .action-buttons { display: none; width: 100%; justify-content: flex-end; gap: 10px; margin-top: 20px; padding-top: 20px; border-top: 1px solid var(--navy-dark); }
-        .action-buttons button { font-size: 0.9em; padding: 8px 16px; background: var(--navy-dark); color: var(--gold-accent); border: 1px solid var(--gold-accent); cursor: pointer; border-radius: 5px; transition: all 0.2s ease;}
+        .action-buttons button { font-size: 0.9em; padding: 8px 16px; background-color: transparent; color: var(--gold-accent); border: 1px solid var(--gold-accent); cursor: pointer; border-radius: 5px; transition: all 0.2s ease; display: inline-flex; align-items: center; gap: 6px; }
         .action-buttons button:hover { background-color: var(--gold-accent); color: var(--navy-dark); }
     </style>
 </head>
@@ -59,11 +59,11 @@
                 <div id="hasil-content">
                     <p style="color: var(--text-secondary);">Hasil lengkap akan muncul di sini...</p>
                 </div>
-                <!-- === TOMBOL AKSI DIPINDAHKAN KE SINI === -->
+                <!-- === TOMBOL AKSI SEKARANG DI SINI, DI LUAR DAN SETELAH KONTEN === -->
                 <div id="actionButtons" class="action-buttons">
-                    <button id="btnCopy">Salin</button>
-                    <button id="btnDownload">Unduh (.txt)</button>
-                    <button id="btnSave">Simpan Riwayat</button>
+                    <button id="btnCopy"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg> Salin</button>
+                    <button id="btnDownload"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg> Unduh</button>
+                    <button id="btnSave"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg> Simpan</button>
                 </div>
             </div>
         </div>
@@ -71,8 +71,7 @@
 
     <script>
     // Seluruh kode JavaScript dari sebelumnya tetap sama persis,
-    // karena perubahannya hanya ada di HTML dan CSS.
-    // ... (tempel semua kode JavaScript dari blok kode sebelumnya di sini)
+    // tidak ada perubahan logika yang diperlukan untuk perbaikan UI ini.
     document.addEventListener('DOMContentLoaded', function() {
         // BAGIAN 1: LOGIKA DROPDOWN CUSTOM
         document.querySelectorAll('.custom-select-wrapper').forEach(function(wrapper) {
