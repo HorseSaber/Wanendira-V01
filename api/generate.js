@@ -37,31 +37,30 @@ export default async function handler(req, res) {
     }
 
     const prompt = `
-Tugas Anda adalah membuat skrip konten YouTube Shorts berdurasi total 60 detik.
-Fokus konten adalah motivasi pria dewasa dengan sudut pandang dominan, kuat, dan maskulin.
-Topik akan berpusat pada sebuah kutipan yang mencerminkan kontrol, dominasi, disiplin, atau keunggulan hidup sebagai pria berkelas.
+Bro, Lo itu tugasnya membuat skrip konten YouTube Shorts berdurasi total 60 detik.
+Fokus konten adalah motivasi pria dewasa dengan sudut pandang yang dominan, kuat, dan maskulin.
+Bayangkan Lo yang seorang cowok maskulin sejati lagi ngebahas sebuah kutipan motivasi dari siapapun itu tokoh motivasinya , peran Lo yang gentle dan maskulin menerangkan kutipan itu dari sudut pandang Lo  yang mencerminkan kontrol, dominasi, disiplin, atau keunggulan hidup sebagai pria atau cowok yang berkelas. Dan Lo lagi ngomong sama orang atau temen Lo yang sedang berada di depan Lo saat ini .
 
-⚠️ STRUKTUR OUTPUT WAJIB (Tanpa improvisasi atau perubahan format):
-TIDAK BOLEH MENGUBAH STRUKTUR INI DALAM KONDISI APA PUN.
-PELANGGARAN STRUKTUR AKAN DIANGGAP KELUAR DARI TUGAS.
+Tulis jawaban Lo  persis dengan urutan kayak gini :
 
-Tulis jawabanmu persis dengan urutan berikut:
-
-JUDUL: ...
-DESKRIPSI: ...
-TAGS: ...
-HASHTAGS: ...
+JUDUL: ( OPTIMASI SEO YOUTUBE )
+DESKRIPSI: ( OPTIMASI SEO YOUTUBE. )
+TAGS: ( OPTIMASI SEO YOUTUBE. )
+HASHTAGS: ( OPTIMASI SEO YOUTUBE. )
 NARASI:
-[0–10s]
-[10–20s]
-[20–30s]
-[30–40s]
-[40–50s]
-[50–60s]
+[0–5s] = Narasi + visual prompt gambar 
+[5–12s] = Narasi + visual prompt gambar 
+[12–18s] = Narasi + visual prompt gambar 
+[18–25s] = Narasi + visual prompt gambar 
+[25–35s] = Narasi + visual prompt gambar 
+[35–44s] = Narasi + visual prompt gambar 
+[44–51s] = Narasi + visual prompt gambar 
+[51–60s] = Narasi + visual prompt gambar 
 
-🧠 GAYA BAHASA: "ALPHA GENTLE / PRIA MASKULIN DOMINAN"
+🧠 GAYA BAHASA: "TEGAS & SANTAI ( GAYA "BRO". )
 
 Spesifikasi Gaya:
+- Seorang pria maskulin sejati yang sedang berbicara empat mata dengan orang yang ada di depannya 
 - Nada suara tenang, rendah, percaya diri
 - Kalimat singkat, tidak emosional berlebihan
 - Hindari kata-kata lembek atau ajakan manja
@@ -77,7 +76,6 @@ Spesifikasi Gaya:
 
 Berikan hasil dalam format teks biasa. Tanpa markdown, tanpa emoji, tanpa penjelasan tambahan.
 `;
-
     const result = await model.generateContent(prompt);
     const response = await result.response;
     const text = response.text();
