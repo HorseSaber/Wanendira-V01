@@ -17,12 +17,15 @@
         .editor-container{width:100%;max-width:800px;display:flex;flex-direction:column;gap:25px}
         h1{font-family:'Alata',sans-serif;font-size:clamp(2rem, 5vw, 2.8rem);text-align:center;color:var(--gold-accent);margin-top:0;margin-bottom:20px}
         label{font-weight:700;font-size:1.1em;margin-bottom:8px;display:block}
+        .label-wrapper { display: flex; justify-content: space-between; align-items: center; }
+        .ide-generator-btn { background: none; border: 1px solid var(--gold-accent); color: var(--gold-accent); font-size: 0.8em; padding: 4px 8px; border-radius: 5px; cursor: pointer; transition: all 0.2s ease; }
+        .ide-generator-btn:hover { background-color: var(--gold-accent); color: var(--navy-dark); }
         textarea{width:100%;padding:15px;border-radius:5px;border:1px solid var(--navy-light);background-color:var(--navy-light);color:var(--text-primary);font-family:'Nunito',sans-serif;font-size:1em;box-sizing:border-box;min-height:150px;resize:vertical}
         .custom-select-wrapper{position:relative;width:100%}.select-hidden{display:none}.select-styled{display:flex;justify-content:space-between;align-items:center;background-color:var(--navy-light);padding:15px;border-radius:5px;border:1px solid var(--navy-light);cursor:pointer;transition:all .2s ease-in-out}.select-styled:hover{border-color:var(--gold-accent)}.select-styled.active{border-color:var(--gold-accent);border-radius:5px 5px 0 0}.select-styled::after{content:"";width:0;height:0;border-left:6px solid transparent;border-right:6px solid transparent;border-top:6px solid var(--text-secondary)}.select-options{display:none;position:absolute;top:100%;left:0;right:0;z-index:99;background-color:var(--navy-light);border-radius:0 0 5px 5px;border:1px solid var(--gold-accent);border-top:0;max-height:250px;overflow-y:auto}.select-options .option-item{padding:15px;color:var(--text-primary);cursor:pointer;transition:all .2s ease-in-out;border-top:1px solid #1a334f}.select-options .option-item:hover{background-color:var(--hover-bg);color:var(--gold-accent)}.optgroup-label{padding:10px 15px;color:var(--gold-accent);font-family:'Alata',sans-serif;font-weight:bold;font-size:0.9em;text-transform:uppercase;border-top:1px solid #1a334f;background-color:var(--navy-dark)}.select-options .option-item:first-of-type, .optgroup-label:first-child{border-top:none}
         .generate-button{background-color:var(--gold-accent);color:var(--navy-dark);border:none;padding:16px 30px;border-radius:5px;cursor:pointer;font-family:'Nunito',sans-serif;font-weight:800;font-size:1.2em;transition:all .3s ease;width:100%;margin-top:10px}
         .generate-button:disabled{background-color:var(--text-secondary);cursor:not-allowed}
         .hasil-container{margin-top:30px;width:100%;padding:25px;background-color:var(--navy-light);border-radius:10px;min-height:200px;border:1px dashed var(--text-secondary);box-sizing:border-box}
-        .hasil-container h3{font-family:'Alata',sans-serif;color:var(--gold-accent);margin-top:0;font-size:1.5em;border-bottom: 1px solid var(--navy-dark); padding-bottom: 10px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center;}
+        .hasil-container h3{font-family:'Alata',sans-serif;color:var(--gold-accent);margin-top:0;font-size:1.5em;border-bottom: 1px solid var(--navy-dark); padding-bottom: 10px; margin-bottom: 20px;}
         #hasil-content > * { margin-bottom: 15px; }
         .hasil-subjudul { color: var(--gold-accent); font-family: 'Alata'; font-size: 1.2em; margin-bottom: 5px !important; }
         .hasil-deskripsi, .hasil-tags, .hasil-hashtags { color: var(--text-secondary); font-style: italic; line-height: 1.6; }
@@ -31,11 +34,8 @@
         .segment-narasi { color: var(--text-primary); line-height: 1.6; }
         .segment-prompt { color: var(--text-secondary); font-size: 0.9em; line-height: 1.5; font-style: italic; margin-top: 10px; padding-top: 10px; border-top: 1px dashed #2c4a6e; }
         .error-message {color: var(--error-color) !important; font-weight: bold;}
-        .label-wrapper { display: flex; justify-content: space-between; align-items: center; }
-        .ide-generator-btn { background: none; border: 1px solid var(--gold-accent); color: var(--gold-accent); font-size: 0.8em; padding: 4px 8px; border-radius: 5px; cursor: pointer; transition: all 0.2s ease; }
-        .ide-generator-btn:hover { background-color: var(--gold-accent); color: var(--navy-dark); }
-        .action-buttons { display: none; gap: 10px; }
-        .action-buttons button { font-size: 0.8em; padding: 6px 12px; background: var(--navy-dark); color: var(--gold-accent); border: 1px solid var(--gold-accent); }
+        .action-buttons { display: none; width: 100%; justify-content: flex-end; gap: 10px; margin-top: 20px; padding-top: 20px; border-top: 1px solid var(--navy-dark); }
+        .action-buttons button { font-size: 0.9em; padding: 8px 16px; background: var(--navy-dark); color: var(--gold-accent); border: 1px solid var(--gold-accent); cursor: pointer; border-radius: 5px; transition: all 0.2s ease;}
         .action-buttons button:hover { background-color: var(--gold-accent); color: var(--navy-dark); }
     </style>
 </head>
@@ -53,27 +53,28 @@
             <div class="custom-select-wrapper"><label for="gaya-bahasa">3. Gaya Bahasa</label><select id="gaya-bahasa" class="select-hidden"><optgroup label="Gaya Motivasi"><option value="Tegas & Santai (Gaya 'Bro')">Tegas & Santai (Gaya 'Bro')</option><option value="Inspiratif & Puitis">Inspiratif & Puitis</option></optgroup><optgroup label="Gaya Narasi"><option value="Narator Dongeng (Hangat & Imajinatif)">Narator Dongeng</option><option value="Pencerita Epik (Dramatis & Megah)">Pencerita Epik</option></optgroup><optgroup label="Gaya Edukasi"><option value="Presenter Antusias (Cepat & Enerjik)">Presenter Antusias</option><option value="Pakar Tenang (Jelas & Berwibawa)">Pakar Tenang</option></optgroup></select></div>
             <div class="custom-select-wrapper"><label for="gaya-visual">4. Gaya Visual</label><select id="gaya-visual" class="select-hidden"><option value="cinematic">Cinematic (Realistis)</option><option value="anime">Anime</option><option value="kartun-3d">Kartun 3D</option></select></div>
             <button id="generateBtn" class="generate-button">✨ Buat Skrip Lengkap!</button>
+            
             <div class="hasil-container">
-                <h3>
-                    <span>Hasil Skrip & Prompt Visual</span>
-                    <div id="actionButtons" class="action-buttons">
-                        <button id="btnCopy">Salin</button>
-                        <button id="btnDownload">Unduh (.txt)</button>
-                        <button id="btnSave">Simpan Riwayat</button>
-                    </div>
-                </h3>
+                <h3>Hasil Skrip & Prompt Visual</h3>
                 <div id="hasil-content">
                     <p style="color: var(--text-secondary);">Hasil lengkap akan muncul di sini...</p>
+                </div>
+                <!-- === TOMBOL AKSI DIPINDAHKAN KE SINI === -->
+                <div id="actionButtons" class="action-buttons">
+                    <button id="btnCopy">Salin</button>
+                    <button id="btnDownload">Unduh (.txt)</button>
+                    <button id="btnSave">Simpan Riwayat</button>
                 </div>
             </div>
         </div>
     </main>
 
     <script>
+    // Seluruh kode JavaScript dari sebelumnya tetap sama persis,
+    // karena perubahannya hanya ada di HTML dan CSS.
+    // ... (tempel semua kode JavaScript dari blok kode sebelumnya di sini)
     document.addEventListener('DOMContentLoaded', function() {
-        // =========================================================
-        // BAGIAN 1: LOGIKA DROPDOWN CUSTOM (YANG HILANG KEMARIN)
-        // =========================================================
+        // BAGIAN 1: LOGIKA DROPDOWN CUSTOM
         document.querySelectorAll('.custom-select-wrapper').forEach(function(wrapper) {
             const selectElement = wrapper.querySelector('select');
             const styledSelect = document.createElement('div');
@@ -144,17 +145,14 @@
             closeAllSelects(null);
         });
 
-        // =========================================================
-        // BAGIAN 2: LOGIKA FITUR-FITUR BARU (GENERATE, AKSI, DLL)
-        // =========================================================
+        // BAGIAN 2: LOGIKA FITUR-FITUR APLIKASI
         const generateBtn = document.getElementById('generateBtn');
         const hasilContent = document.getElementById('hasil-content');
         const btnBuatIde = document.getElementById('btnBuatIde');
         const ideTextarea = document.getElementById('ide');
         const actionButtons = document.getElementById('actionButtons');
-        let fullScriptText = ''; // Variabel global untuk menyimpan teks mentah
+        let fullScriptText = '';
 
-        // Event listener untuk tombol 'Buatkan Ide'
         btnBuatIde.addEventListener('click', async () => {
             const kategori = document.getElementById('kategori').value;
             btnBuatIde.disabled = true;
@@ -177,9 +175,8 @@
             }
         });
 
-        // Fungsi untuk merender hasil generate
         function renderStructuredResult(scriptText) {
-            fullScriptText = scriptText; // Simpan teks mentah untuk disalin/diunduh
+            fullScriptText = scriptText;
             hasilContent.innerHTML = '';
             const lines = scriptText.split('\n');
 
@@ -239,7 +236,6 @@
             actionButtons.style.display = 'flex';
         }
 
-        // Event listener utama untuk tombol 'Generate'
         generateBtn.addEventListener('click', async () => {
             const kategori = document.getElementById('kategori').value;
             const ide = document.getElementById('ide').value;
@@ -262,15 +258,11 @@
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ kategori, ide, gayaBahasa, gayaVisual, task: 'generate_script' }),
                 });
-
                 const data = await response.json();
-
                 if (!response.ok) {
                     throw new Error(data.error || 'Dapur sedang sibuk atau ada masalah.');
                 }
-                
                 renderStructuredResult(data.script);
-
             } catch (error) {
                 console.error("Terjadi kesalahan:", error);
                 const errorMessage = `Waduh, ada masalah bro: ${error.message}`;
@@ -281,7 +273,6 @@
             }
         });
 
-        // Event listener untuk tombol-tombol aksi
         document.getElementById('btnCopy').addEventListener('click', () => {
             navigator.clipboard.writeText(fullScriptText)
                 .then(() => { alert('Seluruh hasil berhasil disalin!'); })
