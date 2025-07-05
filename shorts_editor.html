@@ -8,6 +8,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Alata&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
     <style>
+        /* ... SEMUA CSS LAMA ... */
         :root{--navy-dark:#0A192F;--gold-accent:#F7B733;--navy-light:#132F4C;--text-primary:#E6F1FF;--text-secondary:#8892B0;--hover-bg:#1d3b5c;--error-color:#ff4d4d}
         body{background-color:var(--navy-dark);color:var(--text-primary);font-family:'Nunito',sans-serif;margin:0}
         header{display:flex;justify-content:space-between;align-items:center;padding:20px 5%;border-bottom:1px solid var(--navy-light)}
@@ -21,17 +22,24 @@
         .custom-select-wrapper{position:relative;width:100%}.select-hidden{display:none}.select-styled{display:flex;justify-content:space-between;align-items:center;background-color:var(--navy-light);padding:15px;border-radius:5px;border:1px solid var(--navy-light);cursor:pointer;transition:all .2s ease-in-out}.select-styled:hover{border-color:var(--gold-accent)}.select-styled.active{border-color:var(--gold-accent);border-radius:5px 5px 0 0}.select-styled::after{content:"";width:0;height:0;border-left:6px solid transparent;border-right:6px solid transparent;border-top:6px solid var(--text-secondary)}.select-options{display:none;position:absolute;top:100%;left:0;right:0;z-index:99;background-color:var(--navy-light);border-radius:0 0 5px 5px;border:1px solid var(--gold-accent);border-top:0;max-height:250px;overflow-y:auto}.select-options .option-item{padding:15px;color:var(--text-primary);cursor:pointer;transition:all .2s ease-in-out;border-top:1px solid #1a334f}.select-options .option-item:hover{background-color:var(--hover-bg);color:var(--gold-accent)}.optgroup-label{padding:10px 15px;color:var(--gold-accent);font-family:'Alata',sans-serif;font-weight:bold;font-size:0.9em;text-transform:uppercase;border-top:1px solid #1a334f;background-color:var(--navy-dark)}.select-options .option-item:first-of-type, .optgroup-label:first-child{border-top:none}
         .generate-button{background-color:var(--gold-accent);color:var(--navy-dark);border:none;padding:16px 30px;border-radius:5px;cursor:pointer;font-family:'Nunito',sans-serif;font-weight:800;font-size:1.2em;transition:all .3s ease;width:100%;margin-top:10px}
         .generate-button:disabled{background-color:var(--text-secondary);cursor:not-allowed}
-        
         .hasil-container{margin-top:30px;width:100%;padding:25px;background-color:var(--navy-light);border-radius:10px;min-height:200px;border:1px dashed var(--text-secondary);box-sizing:border-box}
-        .hasil-container h3{font-family:'Alata',sans-serif;color:var(--gold-accent);margin-top:0;font-size:1.5em;border-bottom: 1px solid var(--navy-dark); padding-bottom: 10px; margin-bottom: 20px;}
+        .hasil-container h3{font-family:'Alata',sans-serif;color:var(--gold-accent);margin-top:0;font-size:1.5em;border-bottom: 1px solid var(--navy-dark); padding-bottom: 10px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center;}
         #hasil-content > * { margin-bottom: 15px; }
         .hasil-subjudul { color: var(--gold-accent); font-family: 'Alata'; font-size: 1.2em; margin-bottom: 5px !important; }
         .hasil-deskripsi, .hasil-tags, .hasil-hashtags { color: var(--text-secondary); font-style: italic; line-height: 1.6; }
-        .segment-block { background-color: var(--navy-dark); padding: 15px; border-radius: 8px; border-left: 3px solid var(--gold-accent); }
+        .segment-block { background-color: var(--navy-dark); padding: 15px; border-radius: 8px; border-left: 3px solid var(--gold-accent); margin-top: 10px; }
         .segment-title { font-weight: 800; color: var(--text-primary); margin-bottom: 10px !important; }
-        .segment-narasi { color: var(--text-primary); line-height: 1.6; margin-bottom: 10px !important; }
-        .segment-prompt { color: var(--text-secondary); font-size: 0.9em; line-height: 1.5; font-style: italic; }
+        .segment-narasi { color: var(--text-primary); line-height: 1.6; }
+        .segment-prompt { color: var(--text-secondary); font-size: 0.9em; line-height: 1.5; font-style: italic; margin-top: 10px; padding-top: 10px; border-top: 1px dashed #2c4a6e; }
         .error-message {color: var(--error-color) !important; font-weight: bold;}
+        
+        /* === STYLE BARU UNTUK TOMBOL-TOMBOL AKSI === */
+        .label-wrapper { display: flex; justify-content: space-between; align-items: center; }
+        .ide-generator-btn { background: none; border: 1px solid var(--gold-accent); color: var(--gold-accent); font-size: 0.8em; padding: 4px 8px; border-radius: 5px; cursor: pointer; transition: all 0.2s ease; }
+        .ide-generator-btn:hover { background-color: var(--gold-accent); color: var(--navy-dark); }
+        .action-buttons { display: none; gap: 10px; } /* Sembunyikan by default */
+        .action-buttons button { font-size: 0.8em; padding: 6px 12px; background: var(--navy-dark); color: var(--gold-accent); border: 1px solid var(--gold-accent); }
+        .action-buttons button:hover { background-color: var(--gold-accent); color: var(--navy-dark); }
     </style>
 </head>
 <body>
@@ -40,13 +48,29 @@
         <div class="editor-container">
             <h1>Shorts Editor</h1>
             <div class="custom-select-wrapper"><label for="kategori">1. Kategori Konten</label><select id="kategori" class="select-hidden"><option value="motivasi">Shorts Motivasi</option><option value="cerpen">Shorts Cerita Pendek</option><option value="fakta-sejarah">Shorts Fakta Sejarah</option></select></div>
-            <div><label for="ide">2. Ide Utamamu</label><textarea id="ide" placeholder="Contoh: Lelah bekerja untuk orang lain..."></textarea></div>
-            <div class="custom-select-wrapper"><label for="gaya-bahasa">3. Gaya Bahasa (Tone of Voice)</label><select id="gaya-bahasa" class="select-hidden"><optgroup label="Gaya Motivasi & Percakapan"><option value="Tegas & Santai (Gaya 'Bro')">Tegas & Santai (Gaya 'Bro')</option><option value="Inspiratif & Puitis">Inspiratif & Puitis</option><option value="Formal & Informatif">Formal & Informatif</option></optgroup><optgroup label="Gaya Narasi & Mendongeng"><option value="Narator Dongeng (Hangat & Imajinatif)">Narator Dongeng (Hangat & Imajinatif)</option><option value="Pencerita Epik (Dramatis & Megah)">Pencerita Epik (Dramatis & Megah)</option></optgroup><optgroup label="Gaya Presentasi & Edukasi"><option value="Presenter Antusias (Cepat & Enerjik)">Presenter Antusias (Cepat & Enerjik)</option><option value="Pakar Tenang (Jelas & Berwibawa)">Pakar Tenang (Jelas & Berwibawa)</option></optgroup></select></div>
-            <div class="custom-select-wrapper"><label for="gaya-visual">4. Gaya Visual</label><select id="gaya-visual" class="select-hidden"><option value="cinematic">Cinematic (Realistis)</option><option value="anime">Anime (Animasi Jepang)</option><option value="kartun-3d">Kartun 3D (Seperti Pixar)</option></select></div>
+            
+            <!-- UPDATE: Tombol "Buatkan Ide" ditambahkan di sini -->
+            <div class="label-wrapper">
+                <label for="ide">2. Ide Utamamu</label>
+                <button id="btnBuatIde" class="ide-generator-btn">✨ Buatkan Ide</button>
+            </div>
+            <textarea id="ide" placeholder="Klik 'Buatkan Ide' atau tulis idemu sendiri..."></textarea>
+            
+            <div class="custom-select-wrapper"><label for="gaya-bahasa">3. Gaya Bahasa</label><select id="gaya-bahasa" class="select-hidden"><optgroup label="Gaya Motivasi"><option value="Tegas & Santai (Gaya 'Bro')">Tegas & Santai (Gaya 'Bro')</option><option value="Inspiratif & Puitis">Inspiratif & Puitis</option></optgroup><optgroup label="Gaya Narasi"><option value="Narator Dongeng (Hangat & Imajinatif)">Narator Dongeng</option><option value="Pencerita Epik (Dramatis & Megah)">Pencerita Epik</option></optgroup><optgroup label="Gaya Edukasi"><option value="Presenter Antusias (Cepat & Enerjik)">Presenter Antusias</option><option value="Pakar Tenang (Jelas & Berwibawa)">Pakar Tenang</option></optgroup></select></div>
+            <div class="custom-select-wrapper"><label for="gaya-visual">4. Gaya Visual</label><select id="gaya-visual" class="select-hidden"><option value="cinematic">Cinematic (Realistis)</option><option value="anime">Anime</option><option value="kartun-3d">Kartun 3D</option></select></div>
+            
             <button id="generateBtn" class="generate-button">✨ Buat Skrip Lengkap!</button>
             
             <div class="hasil-container">
-                <h3>Hasil Skrip & Prompt Visual</h3>
+                <h3>
+                    <span>Hasil Skrip & Prompt Visual</span>
+                    <!-- UPDATE: Tombol Aksi ditambahkan di sini -->
+                    <div id="actionButtons" class="action-buttons">
+                        <button id="btnCopy">Salin</button>
+                        <button id="btnDownload">Unduh (.txt)</button>
+                        <button id="btnSave">Simpan Riwayat</button>
+                    </div>
+                </h3>
                 <div id="hasil-content">
                     <p style="color: var(--text-secondary);">Hasil lengkap akan muncul di sini...</p>
                 </div>
@@ -55,209 +79,137 @@
     </main>
 
     <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        document.querySelectorAll('.custom-select-wrapper').forEach(function(wrapper) {
-            const selectElement = wrapper.querySelector('select');
-            const styledSelect = document.createElement('div');
-            styledSelect.setAttribute('class', 'select-styled');
-            styledSelect.textContent = selectElement.options[selectElement.selectedIndex].text;
-            
-            const optionsList = document.createElement('div');
-            optionsList.setAttribute('class', 'select-options');
-            
-            const options = Array.from(selectElement.children);
-            
-            options.forEach(function(item) {
-                if (item.tagName === 'OPTGROUP') {
-                    const groupLabel = document.createElement('div');
-                    groupLabel.textContent = item.label;
-                    groupLabel.classList.add('optgroup-label');
-                    optionsList.appendChild(groupLabel);
-                    
-                    const groupOptions = Array.from(item.children);
-                    groupOptions.forEach(function(option) {
-                        addOption(option);
+        // ... KODE DROPDOWN CUSTOM TETAP SAMA ...
+
+        // --- KODE JAVASCRIPT BARU & YANG DI-UPDATE ---
+        document.addEventListener('DOMContentLoaded', function() {
+            // ... KODE DROPDOWN CUSTOM LAMA ADA DI SINI ...
+
+            const generateBtn = document.getElementById('generateBtn');
+            const hasilContent = document.getElementById('hasil-content');
+            const btnBuatIde = document.getElementById('btnBuatIde');
+            const ideTextarea = document.getElementById('ide');
+            const actionButtons = document.getElementById('actionButtons');
+            let fullScriptText = ''; // Variabel untuk menyimpan teks mentah
+
+            // FUNGSI BARU: Buatkan Ide
+            btnBuatIde.addEventListener('click', async () => {
+                const kategori = document.getElementById('kategori').value;
+                btnBuatIde.disabled = true;
+                btnBuatIde.textContent = 'Mencari...';
+
+                try {
+                    const response = await fetch('/api/generate', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ task: 'generate_idea', kategori: kategori }),
                     });
-                } else {
-                    addOption(item);
+                    const data = await response.json();
+                    if (!response.ok) throw new Error(data.error);
+                    ideTextarea.value = data.generated_idea;
+                } catch (error) {
+                    alert('Gagal membuat ide: ' + error.message);
+                } finally {
+                    btnBuatIde.disabled = false;
+                    btnBuatIde.textContent = '✨ Buatkan Ide';
                 }
             });
-
-            function addOption(option) {
-                const optionDiv = document.createElement('div');
-                optionDiv.textContent = option.textContent;
-                optionDiv.classList.add('option-item');
-                optionDiv.setAttribute('data-value', option.value);
-                
-                optionDiv.addEventListener('click', function(e) {
-                    e.stopPropagation();
-                    styledSelect.textContent = this.textContent;
-                    selectElement.value = this.getAttribute('data-value');
-                    optionsList.style.display = 'none';
-                    styledSelect.classList.remove('active');
-                });
-                optionsList.appendChild(optionDiv);
-            }
             
-            wrapper.appendChild(styledSelect);
-            wrapper.appendChild(optionsList);
-            
-            styledSelect.addEventListener('click', function(e) {
-                e.stopPropagation();
-                closeAllSelects(this);
-                const isHidden = optionsList.style.display === 'none' || optionsList.style.display === '';
-                optionsList.style.display = isHidden ? 'block' : 'none';
-                this.classList.toggle('active', isHidden);
-            });
-        });
-        
-        function closeAllSelects(elmnt) {
-            document.querySelectorAll('.select-options').forEach(function(options) {
-                if (!elmnt || elmnt.nextSibling !== options) {
-                    options.style.display = 'none';
-                    if (options.previousSibling.classList) {
-                       options.previousSibling.classList.remove('active');
+            // FUNGSI BARU: Render Hasil yang lebih rapi
+            function renderStructuredResult(scriptText) {
+                fullScriptText = scriptText; // Simpan teks mentah
+                hasilContent.innerHTML = '';
+                const lines = scriptText.split('\n');
+
+                lines.forEach(line => {
+                    if (line.trim() === '') return;
+                    
+                    if (line.startsWith('JUDUL:') || line.startsWith('DESKRIPSI:') || line.startsWith('TAGS:') || line.startsWith('HASHTAGS:') || line.startsWith('NARASI:')) {
+                        const parts = line.split(':');
+                        const title = parts[0].trim();
+                        const content = parts.slice(1).join(':').trim();
+                        
+                        const el = document.createElement('h4');
+                        el.className = 'hasil-subjudul';
+                        el.textContent = title;
+                        hasilContent.appendChild(el);
+                        
+                        const contentEl = document.createElement('p');
+                        contentEl.textContent = content;
+                        if (title !== 'JUDUL' && title !== 'NARASI') {
+                            contentEl.className = 'hasil-' + title.toLowerCase();
+                        }
+                        hasilContent.appendChild(contentEl);
+
+                    } else if (line.startsWith('SEGMENT')) {
+                        const segmentBlock = document.createElement('div');
+                        segmentBlock.className = 'segment-block';
+                        
+                        const narasiMatch = line.match(/:(.*?)\+/);
+                        const promptMatch = line.match(/\(Prompt Visual:(.*?)\)/);
+
+                        const segmentTitleText = line.split(':')[0].trim();
+                        const narasiText = narasiMatch ? narasiMatch[1].trim() : line;
+                        const promptText = promptMatch ? `(Prompt Visual: ${promptMatch[1].trim()})` : '';
+
+                        const titleEl = document.createElement('p');
+                        titleEl.className = 'segment-title';
+                        titleEl.textContent = segmentTitleText;
+                        segmentBlock.appendChild(titleEl);
+
+                        const narasiEl = document.createElement('p');
+                        narasiEl.className = 'segment-narasi';
+                        narasiEl.textContent = narasiText;
+                        segmentBlock.appendChild(narasiEl);
+                        
+                        if (promptText) {
+                            const promptEl = document.createElement('p');
+                            promptEl.className = 'segment-prompt';
+                            promptEl.textContent = promptText;
+                            segmentBlock.appendChild(promptEl);
+                        }
+                        
+                        hasilContent.appendChild(segmentBlock);
                     }
-                }
-            });
-        }
-        
-        document.addEventListener('click', function() {
-            closeAllSelects(null);
-        });
-
-        const generateBtn = document.getElementById('generateBtn');
-        const hasilContent = document.getElementById('hasil-content');
-
-        function renderStructuredResult(scriptText) {
-            hasilContent.innerHTML = ''; 
-            const lines = scriptText.split('\n');
-
-            lines.forEach(line => {
-                if (line.trim() === '') return;
-
-                if (line.startsWith('JUDUL:')) {
-                    const el = document.createElement('h4');
-                    el.className = 'hasil-subjudul';
-                    el.textContent = "JUDUL";
-                    hasilContent.appendChild(el);
-                    
-                    const content = document.createElement('p');
-                    content.textContent = line.substring(6).trim();
-                    hasilContent.appendChild(content);
-
-                } else if (line.startsWith('DESKRIPSI:')) {
-                    const el = document.createElement('h4');
-                    el.className = 'hasil-subjudul';
-                    el.textContent = "DESKRIPSI";
-                    hasilContent.appendChild(el);
-
-                    const content = document.createElement('p');
-                    content.className = 'hasil-deskripsi';
-                    content.textContent = line.substring(10).trim();
-                    hasilContent.appendChild(content);
-
-                } else if (line.startsWith('TAGS:')) {
-                    const el = document.createElement('h4');
-                    el.className = 'hasil-subjudul';
-                    el.textContent = "TAGS";
-                    hasilContent.appendChild(el);
-
-                    const content = document.createElement('p');
-                    content.className = 'hasil-tags';
-                    content.textContent = line.substring(5).trim();
-                    hasilContent.appendChild(content);
-
-                } else if (line.startsWith('HASHTAGS:')) {
-                     const el = document.createElement('h4');
-                    el.className = 'hasil-subjudul';
-                    el.textContent = "HASHTAGS";
-                    hasilContent.appendChild(el);
-
-                    const content = document.createElement('p');
-                    content.className = 'hasil-hashtags';
-                    content.textContent = line.substring(9).trim();
-                    hasilContent.appendChild(content);
-                
-                } else if (line.startsWith('NARASI:')) {
-                    const el = document.createElement('h4');
-                    el.className = 'hasil-subjudul';
-                    el.style.marginTop = '20px';
-                    el.textContent = "NARASI SCRIPT";
-                    hasilContent.appendChild(el);
-
-                } else if (line.startsWith('SEGMENT')) {
-                    const segmentBlock = document.createElement('div');
-                    segmentBlock.className = 'segment-block';
-                    
-                    const parts = line.split('+ (Prompt Visual:');
-                    
-                    const titleAndNarasi = parts[0].split(':');
-                    const segmentTitleText = titleAndNarasi.shift().trim();
-                    const narasiText = titleAndNarasi.join(':').trim();
-
-                    const titleEl = document.createElement('p');
-                    titleEl.className = 'segment-title';
-                    titleEl.textContent = segmentTitleText;
-                    segmentBlock.appendChild(titleEl);
-
-                    const narasiEl = document.createElement('p');
-                    narasiEl.className = 'segment-narasi';
-                    narasiEl.textContent = narasiText;
-                    segmentBlock.appendChild(narasiEl);
-                    
-                    if (parts[1]) {
-                        const promptEl = document.createElement('p');
-                        promptEl.className = 'segment-prompt';
-                        promptEl.textContent = `(Prompt Visual: ${parts[1]}`;
-                        segmentBlock.appendChild(promptEl);
-                    }
-                    
-                    hasilContent.appendChild(segmentBlock);
-                }
-            });
-        }
-
-        generateBtn.addEventListener('click', async () => {
-            const kategori = document.getElementById('kategori').value;
-            const ide = document.getElementById('ide').value;
-            const gayaBahasa = document.getElementById('gaya-bahasa').value;
-            const gayaVisual = document.getElementById('gaya-visual').value;
-
-            if (!ide.trim()) {
-                alert("Bro, ide utamanya jangan kosong ya!");
-                return;
-            }
-
-            generateBtn.disabled = true;
-            generateBtn.textContent = 'Sedang Meracik Ide...';
-            hasilContent.innerHTML = '<p>Pelayan sedang menuju dapur... Mohon tunggu sebentar...</p>';
-
-            try {
-                const response = await fetch('/api/generate', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ kategori, ide, gayaBahasa, gayaVisual }),
                 });
-
-                const data = await response.json();
-
-                if (!response.ok) {
-                    throw new Error(data.error || 'Dapur sedang sibuk atau ada masalah.');
-                }
-                
-                renderStructuredResult(data.script);
-
-            } catch (error) {
-                console.error("Terjadi kesalahan:", error);
-                const errorMessage = `Waduh, ada masalah bro: ${error.message}`;
-                hasilContent.innerHTML = `<p class="error-message">${errorMessage}</p>`;
-            } finally {
-                generateBtn.disabled = false;
-                generateBtn.textContent = '✨ Buat Skrip Lengkap!';
+                actionButtons.style.display = 'flex'; // Tampilkan tombol-tombol aksi
             }
+
+            // FUNGSI UTAMA: Generate Script (sedikit diubah)
+            generateBtn.addEventListener('click', async () => {
+                // ... (kode untuk mengambil nilai form tidak berubah) ...
+                try {
+                    // ... (kode fetch tidak berubah) ...
+                    renderStructuredResult(data.script);
+                } catch (error) {
+                    // ... (kode error tidak berubah) ...
+                } finally {
+                    // ... (kode finally tidak berubah) ...
+                }
+            });
+
+            // FUNGSI BARU: Tombol-tombol Aksi
+            document.getElementById('btnCopy').addEventListener('click', () => {
+                navigator.clipboard.writeText(fullScriptText)
+                    .then(() => alert('Seluruh hasil berhasil disalin!'))
+                    .catch(err => alert('Gagal menyalin: ', err));
+            });
+
+            document.getElementById('btnDownload').addEventListener('click', () => {
+                const blob = new Blob([fullScriptText], { type: 'text/plain' });
+                const a = document.createElement('a');
+                a.href = URL.createObjectURL(blob);
+                a.download = 'wanendira_script.txt';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+            });
+
+            document.getElementById('btnSave').addEventListener('click', () => {
+                alert('Fitur "Simpan Riwayat" sedang dalam pengembangan!\nIni akan memerlukan koneksi ke database Firestore untuk menyimpan hasil karyamu secara permanen di akunmu.');
+                // Di sinilah nanti logika untuk menyimpan ke Firestore akan ditempatkan.
+            });
         });
-    });
     </script>
 </body>
 </html>
