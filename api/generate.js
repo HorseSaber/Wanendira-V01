@@ -1,151 +1,86 @@
-// api/generate.js - VERSI DIAGNOSTIK
+// api/generate.js - VERSI BARU YANG DINAMIS (PERBAIKAN)
 
 const { GoogleGenerativeAI } = require("@google/generative-ai");
 
 export default async function handler(req, res) {
-  // === ALAT PELACAK DIMULAI DI SINI ===
-  console.log("Fungsi 'generate' dipanggil...");
+  // 1. Memeriksa Metode Request
+  if (req.method !== 'POST') {
+    return res.status(405).json({ error: 'Method Not Allowed. Hanya request POST yang diizinkan.' });
+  }
 
+  // 2. Memeriksa dan Mengamankan API Key
   const apiKey = process.env.GEMINI_API_KEY;
-
   if (!apiKey) {
-    console.error("!!! FATAL: GEMINI_API_KEY tidak ada di process.env !!!");
-    // Mengirim kembali JSON error yang jelas
+    console.error("!!! KESALAHAN FATAL: GEMINI_API_KEY tidak ditemukan di environment variables !!!");
     return res.status(500).json({ 
-      error: "Kesalahan Konfigurasi Server: Kunci API rahasia tidak dapat diakses. Silakan periksa pengaturan Environment Variable di Vercel." 
+      error: "Kesalahan Konfigurasi Server: Kunci API rahasia tidak dapat diakses. Hubungi admin." 
     });
   }
   
-  console.log("SUKSES: GEMINI_API_KEY berhasil dibaca dari environment.");
-  // Kita tidak akan log kuncinya, cukup konfirmasi bahwa itu ada.
-
-  // === ALAT PELACAK SELESAI ===
-
-
-  if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'Method Not Allowed.' });
-  }
-
   try {
-    const genAI = new GoogleGenerativeAI(apiKey); // Gunakan apiKey yang sudah kita ambil
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+    // 3. Mengambil SEMUA data dari frontend
+    const { kategori, ide, gayaBahasa, gayaVisual } = req.body;
 
-    const { ide: kutipan } = req.body;
-    
-    if (!kutipan) {
-        return res.status(400).json({ error: "Input tidak lengkap. Kolom ide/kutipan harus diisi." });
+    // Validasi input dasar
+    if (!kategori || !ide || !gayaBahasa || !gayaVisual) {
+        return res.status(400).json({ error: "Input tidak lengkap. Semua kolom harus diisi." });
     }
 
+    // --- BAGIAN UTAMA: PEMBENTUKAN PROMPT DINAMIS ---
     const prompt = `
-Bro, Lo itu seorang pria maskulin dengan gaya yang tegas, dominan, tenang tapi penuh wibawa, sering disebut juga sebagai gaya “Alpha Gentle”:
+Anda adalah seorang penulis skrip dan direktur seni AI untuk konten YouTube Shorts.
+Tugas Anda adalah membuat skrip lengkap berdasarkan spesifikasi berikut:
 
-Nada suara: rendah, stabil, percaya diri
+**1. KATEGORI KONTEN:** ${kategori}
 
-Gaya bicara lo singkat, to the point, kadang sedikit tajam tapi tetap elegan
+**2. GAYA BAHASA / PERSONA NARATOR:**
+Gunakan gaya bahasa "${gayaBahasa}". Jika gaya yang dipilih adalah "Tegas & Santai (Gaya 'Bro')", maka adopsi persona berikut:
+- Persona: Pria maskulin sejati, tegas, dominan, tenang, berwibawa. Seolah sedang berbicara empat mata dengan teman dekatnya (bro).
+- Nada: Rendah, stabil, percaya diri.
+- Gaya Bicara: Singkat, to the point, lugas, reflektif, tidak mendramatisir. Gunakan sapaan "bro", "lo", "gue".
+- Getaran: Seperti mentor atau pemimpin yang sudah berpengalaman.
 
-kata-kata Lo maskulin, lugas, reflektif, tidak mendramatisir
+**3. GAYA VISUAL KONTEN:**
+Setiap segmen narasi HARUS disertai dengan deskripsi prompt visual untuk AI generator gambar. Prompt visual ini harus dibuat dengan gaya "${gayaVisual}".
 
-Vibe Lo seperti mentor, pemimpin, atau laki-laki yang udah “melalui banyak hal”
+**4. IDE UTAMA / KUTIPAN YANG DIBAHAS:**
+"${ide}"
 
-Lo kurang lebih seperti narator film dokumenter pria, channel-channel motivasi maskulin (contoh: “Alpha Motivation”, “Men of Purpose”, “Jordan Peterson Clips”, atau gaya voice-over pria di iklan jam tangan atau parfum)
+**5. FORMAT OUTPUT (SANGAT PENTING):**
+Tulis jawaban persis dengan struktur dan urutan di bawah ini. JANGAN mengubah struktur, menambah bagian, atau menggunakan format markdown.
 
-tugas Lo saat ini membuat skrip konten YouTube Shorts berdurasi total 60 detik.
-Fokus konten adalah motivasi pria dewasa dengan sudut pandang yang dominan, kuat, dan maskulin.
-Bayangkan Lo yang seorang cowok maskulin sejati lagi ngebahas sebuah kutipan motivasi dari siapapun itu tokoh motivasinya , peran Lo yang gentle dan maskulin menerangkan kutipan itu dari sudut pandang Lo  yang mencerminkan kontrol, dominasi, disiplin, atau keunggulan hidup sebagai pria atau cowok yang berkelas. Dan Lo lagi ngomong sama orang atau temen Lo yang sedang berada di depan Lo saat ini .
+JUDUL: [Buat judul yang menarik dan dioptimalkan untuk SEO YouTube berdasarkan ide utama]
 
-Tulis jawaban Lo  persis dengan urutan kayak gini :
+DESKRIPSI: [Buat deskripsi singkat yang menarik, sertakan ajakan subscribe, dan tema bahasan]
 
-JUDUL: ( OPTIMASI SEO YOUTUBE )
-Uang Bisa Mengendalikanmu – Kecuali Lo bisa Kendalikan Duluan 💸 #MotivasiUang #Shorts
+TAGS: [Buat 5-10 tag relevan yang dipisahkan koma]
 
-
-DESKRIPSI: ( OPTIMASI SEO YOUTUBE. )
-Kamu kerja keras tiap hari, tapi masih ngerasa nggak punya kendali atas uang?
-Mungkin... karena kamu belum bener-bener nguasain uangmu.
-Tonton sampai akhir dan ubah cara pandangmu hari ini.
-
-🔔 Subscribe untuk konten motivasi keuangan & mindset sukses tiap minggu.
-
-🎙️ Kutipan: Dave Ramsey
-📌 Tema: Kontrol Finansial Pribadi
-
-
-TAGS: ( OPTIMASI SEO YOUTUBE. )
-
-HASHTAGS: ( OPTIMASI SEO YOUTUBE. )
-#motivasiuang #shorts #kontrolkeuangan #kutipanhebat #daveramsey #uang #mindsetsukses
+HASHTAGS: [Buat 3-5 hashtag relevan]
 
 NARASI:
+SEGMENT 1: [Narasi untuk 5 detik pertama (Hook)] + (Prompt Visual: deskripsi gambar detail dengan gaya ${gayaVisual})
+SEGMENT 2: [Narasi untuk 7 detik berikutnya] + (Prompt Visual: deskripsi gambar detail dengan gaya ${gayaVisual})
+SEGMENT 3: [Narasi untuk 6 detik berikutnya (Fakta/Poin Pendukung)] + (Prompt Visual: deskripsi gambar detail dengan gaya ${gayaVisual})
+SEGMENT 4: [Narasi untuk 7 detik berikutnya] + (Prompt Visual: deskripsi gambar detail dengan gaya ${gayaVisual})
+SEGMENT 5: [Narasi untuk 10 detik berikutnya (Pembahasan Inti Ide/Kutipan)] + (Prompt Visual: deskripsi gambar detail dengan gaya ${gayaVisual})
+SEGMENT 6: [Narasi untuk 5 detik berikutnya] + (Prompt Visual: deskripsi gambar detail dengan gaya ${gayaVisual})
+SEGMENT 7: [Narasi untuk 10 detik berikutnya (Refleksi/Pertanyaan)] + (Prompt Visual: deskripsi gambar detail dengan gaya ${gayaVisual})
+SEGMENT 8: [Narasi untuk 10 detik terakhir (Closing/Call to Action)] + (Prompt Visual: deskripsi gambar detail dengan gaya ${gayaVisual})
+`;
 
- SEGMENT 01 : HOOK 
-[0–5s] = 
-NARASI : "Pernah nggak sih, Lo  ngerasa udah kerja keras tapi uang tetap aja terasa kurang?" + ( visual prompt gambar )
+    // 4. Menghubungi Google AI
+    const genAI = new GoogleGenerativeAI(apiKey);
+    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
-SEGMENT 02 : 
-[5–12s] = 
-NARASI : "Bisa jadi... bukan Lo  yang ngatur uang, tapi uang yang ngatur hidup lo."
- + ( visual prompt gambar )
-
-SEGMENT 03 : FAKTA MENGEJUTKAN
-[12–18s] = 
-NARASI : "70% orang gak punya rencana keuangan bulanan. + ( visual prompt gambar )
-
-SEGMENT 04 : 
-[18–25s] = 
-NARASI: Dan Lo tau nggak? Itu kayak nyetir tanpa arah bro."
- + ( visual prompt gambar )
-
-SEGMENT 05 : KUTIPAN UTAMA
-[25–35s] = 
-NARASI : "Ada kutipan tajam dari Dave Ramsey yang selalu gue inget bro:"
- + ( visual prompt gambar )
-
-SEGMENT 06 : 
-[35–40s] = 
-NARASI : ‘Kendalikan uangmu... atau uang akan mengendalikanmu.
- + ( visual prompt gambar )
-
-SEGMENT 07 : REFLEKSI DIRI
-[40–50s] = 
-NARASI : "Pertanyaannya sekarang: siapa yang pegang kendali?’Dompet Lo atau diri Lo sendiri?”
- + ( visual prompt gambar )
-
-SEGMENT 08 : AKSI NYATA
-[50–55s] = 
-NARASI : Mulai dari hal kecil. Catat pengeluaran. Bikin budget mingguan. Dan jangan takut bilang ‘nggak’." +( visual prompt gambar )
-
-SEGMENT 08 : CLOSING CALL TO ACTION
-[55–60s] = 
-Narasi: "Sadar bro, uang itu alat. Kalau Lo nggak mau arahkan, dia bakal nyeret Lo  ke mana aja."
-"Mau uang kerja buat Lo , atau lo terus kerja buat uang?”
-
-
-🧠 GAYA BAHASA: "TEGAS & SANTAI ( GAYA ‘ BRO’. )
-
-Spesifikasi Gaya:
-- Seorang pria maskulin sejati yang sedang berbicara empat mata dengan orang yang ada di depannya 
-- Nada suara tenang, rendah, percaya diri
-- Kalimat singkat, tidak emosional berlebihan
-- Hindari kata-kata lembek atau ajakan manja
-
-🛑 DILARANG:
-- Mengubah struktur
-- Menambah bagian
-- Menggunakan gaya motivasi biasa, curhat, sinetron, atau puitis
-
-📌 KUTIPAN YANG AKAN DIBAHAS:
-"${kutipan}"
-
-Berikan hasil dalam format teks biasa. Tanpa markdown, tanpa emoji, tanpa penjelasan tambahan.
-`:
     const result = await model.generateContent(prompt);
     const response = await result.response;
     const text = response.text();
 
+    // 5. Mengirim Hasil Kembali ke Frontend
     res.status(200).json({ script: text });
 
   } catch (error) {
-    console.error("Error saat generate konten:", error);
-    res.status(500).json({ error: `Terjadi kesalahan saat menghubungi AI: ${error.message}` });
+    console.error("Error saat proses generate:", error);
+    res.status(500).json({ error: `Terjadi kesalahan internal saat menghubungi AI: ${error.message}` });
   }
 }
