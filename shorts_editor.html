@@ -18,21 +18,19 @@
         h1{font-family:'Alata',sans-serif;font-size:clamp(2rem, 5vw, 2.8rem);text-align:center;color:var(--gold-accent);margin-top:0;margin-bottom:20px}
         label{font-weight:700;font-size:1.1em;margin-bottom:8px;display:block}
         textarea{width:100%;padding:15px;border-radius:5px;border:1px solid var(--navy-light);background-color:var(--navy-light);color:var(--text-primary);font-family:'Nunito',sans-serif;font-size:1em;box-sizing:border-box;min-height:150px;resize:vertical}
-        .custom-select-wrapper{position:relative;width:100%}.select-hidden{display:none}
-        .select-styled{display:flex;justify-content:space-between;align-items:center;background-color:var(--navy-light);padding:15px;border-radius:5px;border:1px solid var(--navy-light);cursor:pointer;transition:all .2s ease-in-out}
-        .select-styled:hover{border-color:var(--gold-accent)}
-        .select-styled.active{border-color:var(--gold-accent);border-radius:5px 5px 0 0}
-        .select-styled::after{content:"";width:0;height:0;border-left:6px solid transparent;border-right:6px solid transparent;border-top:6px solid var(--text-secondary)}
-        .select-options{display:none;position:absolute;top:100%;left:0;right:0;z-index:99;background-color:var(--navy-light);border-radius:0 0 5px 5px;border:1px solid var(--gold-accent);border-top:0;max-height:250px;overflow-y:auto}
-        .select-options .option-item{padding:15px;color:var(--text-primary);cursor:pointer;transition:all .2s ease-in-out;border-top:1px solid #1a334f}
-        .select-options .option-item:hover{background-color:var(--hover-bg);color:var(--gold-accent)}
-        .optgroup-label{padding:10px 15px;color:var(--gold-accent);font-family:'Alata',sans-serif;font-weight:bold;font-size:0.9em;text-transform:uppercase;border-top:1px solid #1a334f;background-color:var(--navy-dark)}
-        .select-options .option-item:first-of-type, .optgroup-label:first-child{border-top:none}
+        .custom-select-wrapper{position:relative;width:100%}.select-hidden{display:none}.select-styled{display:flex;justify-content:space-between;align-items:center;background-color:var(--navy-light);padding:15px;border-radius:5px;border:1px solid var(--navy-light);cursor:pointer;transition:all .2s ease-in-out}.select-styled:hover{border-color:var(--gold-accent)}.select-styled.active{border-color:var(--gold-accent);border-radius:5px 5px 0 0}.select-styled::after{content:"";width:0;height:0;border-left:6px solid transparent;border-right:6px solid transparent;border-top:6px solid var(--text-secondary)}.select-options{display:none;position:absolute;top:100%;left:0;right:0;z-index:99;background-color:var(--navy-light);border-radius:0 0 5px 5px;border:1px solid var(--gold-accent);border-top:0;max-height:250px;overflow-y:auto}.select-options .option-item{padding:15px;color:var(--text-primary);cursor:pointer;transition:all .2s ease-in-out;border-top:1px solid #1a334f}.select-options .option-item:hover{background-color:var(--hover-bg);color:var(--gold-accent)}.optgroup-label{padding:10px 15px;color:var(--gold-accent);font-family:'Alata',sans-serif;font-weight:bold;font-size:0.9em;text-transform:uppercase;border-top:1px solid #1a334f;background-color:var(--navy-dark)}.select-options .option-item:first-of-type, .optgroup-label:first-child{border-top:none}
         .generate-button{background-color:var(--gold-accent);color:var(--navy-dark);border:none;padding:16px 30px;border-radius:5px;cursor:pointer;font-family:'Nunito',sans-serif;font-weight:800;font-size:1.2em;transition:all .3s ease;width:100%;margin-top:10px}
         .generate-button:disabled{background-color:var(--text-secondary);cursor:not-allowed}
+        
         .hasil-container{margin-top:30px;width:100%;padding:25px;background-color:var(--navy-light);border-radius:10px;min-height:200px;border:1px dashed var(--text-secondary);box-sizing:border-box}
-        .hasil-container h3{font-family:'Alata',sans-serif;color:var(--gold-accent);margin-top:0;font-size:1.5em}
-        .hasil-container p{color:var(--text-primary);white-space:pre-wrap;line-height:1.7;font-size:1.1em}
+        .hasil-container h3{font-family:'Alata',sans-serif;color:var(--gold-accent);margin-top:0;font-size:1.5em;border-bottom: 1px solid var(--navy-dark); padding-bottom: 10px; margin-bottom: 20px;}
+        #hasil-content > * { margin-bottom: 15px; }
+        .hasil-subjudul { color: var(--gold-accent); font-family: 'Alata'; font-size: 1.2em; margin-bottom: 5px !important; }
+        .hasil-deskripsi, .hasil-tags, .hasil-hashtags { color: var(--text-secondary); font-style: italic; line-height: 1.6; }
+        .segment-block { background-color: var(--navy-dark); padding: 15px; border-radius: 8px; border-left: 3px solid var(--gold-accent); }
+        .segment-title { font-weight: 800; color: var(--text-primary); margin-bottom: 10px !important; }
+        .segment-narasi { color: var(--text-primary); line-height: 1.6; margin-bottom: 10px !important; }
+        .segment-prompt { color: var(--text-secondary); font-size: 0.9em; line-height: 1.5; font-style: italic; }
         .error-message {color: var(--error-color) !important; font-weight: bold;}
     </style>
 </head>
@@ -41,54 +39,17 @@
     <main>
         <div class="editor-container">
             <h1>Shorts Editor</h1>
-            
-            <div class="custom-select-wrapper">
-                <label for="kategori">1. Kategori Konten</label>
-                <select id="kategori" class="select-hidden">
-                    <option value="motivasi">Shorts Motivasi</option>
-                    <option value="cerpen">Shorts Cerita Pendek</option>
-                    <option value="fakta-sejarah">Shorts Fakta Sejarah</option>
-                </select>
-            </div>
-            
-            <div>
-                <label for="ide">2. Ide Utamamu</label>
-                <textarea id="ide" placeholder="Contoh: Lelah bekerja untuk orang lain..."></textarea>
-            </div>
-            
-            <div class="custom-select-wrapper">
-                <label for="gaya-bahasa">3. Gaya Bahasa (Tone of Voice)</label>
-                <select id="gaya-bahasa" class="select-hidden">
-                    <optgroup label="Gaya Motivasi & Percakapan">
-                        <option value="Tegas & Santai (Gaya 'Bro')">Tegas & Santai (Gaya 'Bro')</option>
-                        <option value="Inspiratif & Puitis">Inspiratif & Puitis</option>
-                        <option value="Formal & Informatif">Formal & Informatif</option>
-                    </optgroup>
-                    <optgroup label="Gaya Narasi & Mendongeng">
-                        <option value="Narator Dongeng (Hangat & Imajinatif)">Narator Dongeng (Hangat & Imajinatif)</option>
-                        <option value="Pencerita Epik (Dramatis & Megah)">Pencerita Epik (Dramatis & Megah)</option>
-                    </optgroup>
-                     <optgroup label="Gaya Presentasi & Edukasi">
-                        <option value="Presenter Antusias (Cepat & Enerjik)">Presenter Antusias (Cepat & Enerjik)</option>
-                        <option value="Pakar Tenang (Jelas & Berwibawa)">Pakar Tenang (Jelas & Berwibawa)</option>
-                    </optgroup>
-                </select>
-            </div>
-            
-            <div class="custom-select-wrapper">
-                <label for="gaya-visual">4. Gaya Visual</label>
-                <select id="gaya-visual" class="select-hidden">
-                    <option value="cinematic">Cinematic (Realistis)</option>
-                    <option value="anime">Anime (Animasi Jepang)</option>
-                    <option value="kartun-3d">Kartun 3D (Seperti Pixar)</option>
-                </select>
-            </div>
-
+            <div class="custom-select-wrapper"><label for="kategori">1. Kategori Konten</label><select id="kategori" class="select-hidden"><option value="motivasi">Shorts Motivasi</option><option value="cerpen">Shorts Cerita Pendek</option><option value="fakta-sejarah">Shorts Fakta Sejarah</option></select></div>
+            <div><label for="ide">2. Ide Utamamu</label><textarea id="ide" placeholder="Contoh: Lelah bekerja untuk orang lain..."></textarea></div>
+            <div class="custom-select-wrapper"><label for="gaya-bahasa">3. Gaya Bahasa (Tone of Voice)</label><select id="gaya-bahasa" class="select-hidden"><optgroup label="Gaya Motivasi & Percakapan"><option value="Tegas & Santai (Gaya 'Bro')">Tegas & Santai (Gaya 'Bro')</option><option value="Inspiratif & Puitis">Inspiratif & Puitis</option><option value="Formal & Informatif">Formal & Informatif</option></optgroup><optgroup label="Gaya Narasi & Mendongeng"><option value="Narator Dongeng (Hangat & Imajinatif)">Narator Dongeng (Hangat & Imajinatif)</option><option value="Pencerita Epik (Dramatis & Megah)">Pencerita Epik (Dramatis & Megah)</option></optgroup><optgroup label="Gaya Presentasi & Edukasi"><option value="Presenter Antusias (Cepat & Enerjik)">Presenter Antusias (Cepat & Enerjik)</option><option value="Pakar Tenang (Jelas & Berwibawa)">Pakar Tenang (Jelas & Berwibawa)</option></optgroup></select></div>
+            <div class="custom-select-wrapper"><label for="gaya-visual">4. Gaya Visual</label><select id="gaya-visual" class="select-hidden"><option value="cinematic">Cinematic (Realistis)</option><option value="anime">Anime (Animasi Jepang)</option><option value="kartun-3d">Kartun 3D (Seperti Pixar)</option></select></div>
             <button id="generateBtn" class="generate-button">✨ Buat Skrip Lengkap!</button>
             
             <div class="hasil-container">
                 <h3>Hasil Skrip & Prompt Visual</h3>
-                <p id="hasilText">Hasil lengkap akan muncul di sini...</p>
+                <div id="hasil-content">
+                    <p style="color: var(--text-secondary);">Hasil lengkap akan muncul di sini...</p>
+                </div>
             </div>
         </div>
     </main>
@@ -165,8 +126,137 @@
             closeAllSelects(null);
         });
 
-        // Bagian untuk fetch API (tidak berubah)
-        const generateBtn=document.getElementById('generateBtn'),hasilText=document.getElementById('hasilText');async function typeWriter(e,t,l=10){e.textContent="";for(let i=0;i<t.length;i++)await new Promise(e=>setTimeout(e,l)),e.textContent+=t.charAt(i)}generateBtn.addEventListener('click',async()=>{const e=document.getElementById('kategori').value,t=document.getElementById('ide').value,l=document.getElementById('gaya-bahasa').value,s=document.getElementById('gaya-visual').value;if(!t.trim())return void alert("Bro, ide utamanya jangan kosong ya!");generateBtn.disabled=!0,generateBtn.textContent="Sedang Meracik Ide...",hasilText.classList.remove('error-message'),hasilText.textContent="Pelayan sedang menuju dapur... Mohon tunggu sebentar...";try{const i=await fetch('/api/generate',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({kategori:e,ide:t,gayaBahasa:l,gayaVisual:s})}),a=await i.json();if(!i.ok)throw new Error(a.error||"Dapur sedang sibuk atau ada masalah.");await typeWriter(hasilText,a.script)}catch(c){console.error("Terjadi kesalahan:",c);const d=`Waduh, ada masalah bro: ${c.message}`;hasilText.textContent=d,hasilText.classList.add('error-message')}finally{generateBtn.disabled=!1,generateBtn.textContent="✨ Buat Skrip Lengkap!"}});
+        const generateBtn = document.getElementById('generateBtn');
+        const hasilContent = document.getElementById('hasil-content');
+
+        function renderStructuredResult(scriptText) {
+            hasilContent.innerHTML = ''; 
+            const lines = scriptText.split('\n');
+
+            lines.forEach(line => {
+                if (line.trim() === '') return;
+
+                if (line.startsWith('JUDUL:')) {
+                    const el = document.createElement('h4');
+                    el.className = 'hasil-subjudul';
+                    el.textContent = "JUDUL";
+                    hasilContent.appendChild(el);
+                    
+                    const content = document.createElement('p');
+                    content.textContent = line.substring(6).trim();
+                    hasilContent.appendChild(content);
+
+                } else if (line.startsWith('DESKRIPSI:')) {
+                    const el = document.createElement('h4');
+                    el.className = 'hasil-subjudul';
+                    el.textContent = "DESKRIPSI";
+                    hasilContent.appendChild(el);
+
+                    const content = document.createElement('p');
+                    content.className = 'hasil-deskripsi';
+                    content.textContent = line.substring(10).trim();
+                    hasilContent.appendChild(content);
+
+                } else if (line.startsWith('TAGS:')) {
+                    const el = document.createElement('h4');
+                    el.className = 'hasil-subjudul';
+                    el.textContent = "TAGS";
+                    hasilContent.appendChild(el);
+
+                    const content = document.createElement('p');
+                    content.className = 'hasil-tags';
+                    content.textContent = line.substring(5).trim();
+                    hasilContent.appendChild(content);
+
+                } else if (line.startsWith('HASHTAGS:')) {
+                     const el = document.createElement('h4');
+                    el.className = 'hasil-subjudul';
+                    el.textContent = "HASHTAGS";
+                    hasilContent.appendChild(el);
+
+                    const content = document.createElement('p');
+                    content.className = 'hasil-hashtags';
+                    content.textContent = line.substring(9).trim();
+                    hasilContent.appendChild(content);
+                
+                } else if (line.startsWith('NARASI:')) {
+                    const el = document.createElement('h4');
+                    el.className = 'hasil-subjudul';
+                    el.style.marginTop = '20px';
+                    el.textContent = "NARASI SCRIPT";
+                    hasilContent.appendChild(el);
+
+                } else if (line.startsWith('SEGMENT')) {
+                    const segmentBlock = document.createElement('div');
+                    segmentBlock.className = 'segment-block';
+                    
+                    const parts = line.split('+ (Prompt Visual:');
+                    
+                    const titleAndNarasi = parts[0].split(':');
+                    const segmentTitleText = titleAndNarasi.shift().trim();
+                    const narasiText = titleAndNarasi.join(':').trim();
+
+                    const titleEl = document.createElement('p');
+                    titleEl.className = 'segment-title';
+                    titleEl.textContent = segmentTitleText;
+                    segmentBlock.appendChild(titleEl);
+
+                    const narasiEl = document.createElement('p');
+                    narasiEl.className = 'segment-narasi';
+                    narasiEl.textContent = narasiText;
+                    segmentBlock.appendChild(narasiEl);
+                    
+                    if (parts[1]) {
+                        const promptEl = document.createElement('p');
+                        promptEl.className = 'segment-prompt';
+                        promptEl.textContent = `(Prompt Visual: ${parts[1]}`;
+                        segmentBlock.appendChild(promptEl);
+                    }
+                    
+                    hasilContent.appendChild(segmentBlock);
+                }
+            });
+        }
+
+        generateBtn.addEventListener('click', async () => {
+            const kategori = document.getElementById('kategori').value;
+            const ide = document.getElementById('ide').value;
+            const gayaBahasa = document.getElementById('gaya-bahasa').value;
+            const gayaVisual = document.getElementById('gaya-visual').value;
+
+            if (!ide.trim()) {
+                alert("Bro, ide utamanya jangan kosong ya!");
+                return;
+            }
+
+            generateBtn.disabled = true;
+            generateBtn.textContent = 'Sedang Meracik Ide...';
+            hasilContent.innerHTML = '<p>Pelayan sedang menuju dapur... Mohon tunggu sebentar...</p>';
+
+            try {
+                const response = await fetch('/api/generate', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ kategori, ide, gayaBahasa, gayaVisual }),
+                });
+
+                const data = await response.json();
+
+                if (!response.ok) {
+                    throw new Error(data.error || 'Dapur sedang sibuk atau ada masalah.');
+                }
+                
+                renderStructuredResult(data.script);
+
+            } catch (error) {
+                console.error("Terjadi kesalahan:", error);
+                const errorMessage = `Waduh, ada masalah bro: ${error.message}`;
+                hasilContent.innerHTML = `<p class="error-message">${errorMessage}</p>`;
+            } finally {
+                generateBtn.disabled = false;
+                generateBtn.textContent = '✨ Buat Skrip Lengkap!';
+            }
+        });
     });
     </script>
 </body>
