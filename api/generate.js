@@ -1,29 +1,41 @@
-// api/generate.js - VERSI FINAL DENGAN CETAK BIRU DARI PENGGUNA
+// api/generate.js - VERSI DIAGNOSTIK
 
 const { GoogleGenerativeAI } = require("@google/generative-ai");
 
 export default async function handler(req, res) {
-  if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'Method Not Allowed. Please use POST.' });
-  }
+  // === ALAT PELACAK DIMULAI DI SINI ===
+  console.log("Fungsi 'generate' dipanggil...");
 
-  if (!process.env.GEMINI_API_KEY) {
-    console.error("GEMINI_API_KEY tidak ditemukan di environment variables.");
-    return res.status(500).json({ error: "Konfigurasi server tidak lengkap. API Key tidak ditemukan." });
+  const apiKey = process.env.GEMINI_API_KEY;
+
+  if (!apiKey) {
+    console.error("!!! FATAL: GEMINI_API_KEY tidak ada di process.env !!!");
+    // Mengirim kembali JSON error yang jelas
+    return res.status(500).json({ 
+      error: "Kesalahan Konfigurasi Server: Kunci API rahasia tidak dapat diakses. Silakan periksa pengaturan Environment Variable di Vercel." 
+    });
+  }
+  
+  console.log("SUKSES: GEMINI_API_KEY berhasil dibaca dari environment.");
+  // Kita tidak akan log kuncinya, cukup konfirmasi bahwa itu ada.
+
+  // === ALAT PELACAK SELESAI ===
+
+
+  if (req.method !== 'POST') {
+    return res.status(405).json({ error: 'Method Not Allowed.' });
   }
 
   try {
-    const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+    const genAI = new GoogleGenerativeAI(apiKey); // Gunakan apiKey yang sudah kita ambil
+    const model = genAI.getGenerativeModel({ model: "gemini-1.5-pro" });
 
-    // "Ide" dari pengguna sekarang kita anggap sebagai "Kutipan"
     const { ide: kutipan } = req.body;
     
     if (!kutipan) {
         return res.status(400).json({ error: "Input tidak lengkap. Kolom ide/kutipan harus diisi." });
     }
 
-    // === CETAK BIRU PROMPT YANG DI-UPGRADE ===
     const prompt = `
 Tugas Anda adalah membuat skrip konten YouTube Shorts berdurasi total 60 detik.
 Fokus konten adalah motivasi pria dewasa dengan sudut pandang dominan, kuat, dan maskulin.
@@ -64,3 +76,16 @@ Spesifikasi Gaya:
 "${kutipan}"
 
 Berikan hasil dalam format teks biasa. Tanpa markdown, tanpa emoji, tanpa penjelasan tambahan.
+`;
+
+    const result = await model.generateContent(prompt);
+    const response = await result.response;
+    const text = response.text();
+
+    res.status(200).json({ script: text });
+
+  } catch (error) {
+    console.error("Error saat generate konten:", error);
+    res.status(500).json({ error: `Terjadi kesalahan saat menghubungi AI: ${error.message}` });
+  }
+}
